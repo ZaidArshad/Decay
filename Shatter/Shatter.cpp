@@ -3,22 +3,27 @@
 #include"SFML\System.hpp"
 #include"SFML\Graphics.hpp"
 #include "Platform.h"
+#include "Player.h"
 
 using namespace sf;
 
-void Update(RectangleShape &rectangle);
-void Draw(RenderWindow& window, RectangleShape &rectangle, Platform &platform);
+void Update(Player &player);
+void Draw(RenderWindow& window, Player &player, Platform &platform);
 
 int main()
 {
 	sf::RenderWindow window(VideoMode(1024, 576), "Shatter");
 	window.setFramerateLimit(60);
 
-	RectangleShape rectangle(Vector2f(50, 50));
-	rectangle.setFillColor(Color::Green);
-	rectangle.setOrigin(rectangle.getSize().x / 2.f, rectangle.getSize().y / 2.f);
-	rectangle.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
-	rectangle.setFillColor(Color::Red);
+	Player player(0,0,1);
+
+
+	Texture aTexture;
+	if (!aTexture.loadFromFile("images/soupCan.png")) {
+		std::cout << "Load failed\n";
+		system("pause");
+	}
+	player.setTexture(aTexture);
 
 	Platform platform(100, 25, 400, 300);
 
@@ -34,34 +39,33 @@ int main()
 
 		}
 
-		Update(rectangle);
-		Draw(window, rectangle, platform);
-
+		Update(player);
+		Draw(window, player, platform);
 	}
 	return 0;
 };
 
 
 
-void Update(RectangleShape &rectangle) {
+void Update(Player &player) {
 	if (Keyboard::isKeyPressed(Keyboard::D)) {
-		rectangle.move(10, 0);
+		player.move(10, 0);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::A)) {
-		rectangle.move(-10, 0);
+		player.move(-10, 0);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::S)) {
-		rectangle.move(0, 10);
+		player.move(0, 10);
 	}
 
 	if (Keyboard::isKeyPressed(Keyboard::W)) {
-		rectangle.move(0, -10);
+		player.move(0, -10);
 	}
 }
 
-void Draw(RenderWindow &window, RectangleShape &rectangle, Platform &platform) {
-	window.clear(Color::Black);
+void Draw(RenderWindow &window, Player &player, Platform &platform) {
+	window.clear(Color::Red);
 	window.draw(platform.getShape());
-	window.draw(rectangle);
+	window.draw(player.getSprite());
 	window.display();
 }
