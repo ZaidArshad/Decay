@@ -7,7 +7,7 @@
 using namespace sf;
 
 void Update(RectangleShape &rectangle);
-void Draw(RenderWindow& window, RectangleShape &rectangle, Platform platform);
+void Draw(RenderWindow& window, RectangleShape &rectangle, Platform &platform);
 
 int main()
 {
@@ -20,7 +20,7 @@ int main()
 	rectangle.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
 	rectangle.setFillColor(Color::Red);
 
-	Platform platform(100, 20, 100, 100);
+	Platform platform(100, 25, 400, 300);
 
 	while (window.isOpen())
 	{
@@ -59,7 +59,7 @@ void Update(RectangleShape &rectangle) {
 	}
 }
 
-void Draw(RenderWindow &window, RectangleShape &rectangle, Platform platform) {
+void Draw(RenderWindow &window, RectangleShape &rectangle, Platform &platform) {
 	window.clear(Color::Black);
 	window.draw(platform.getShape());
 	window.draw(rectangle);
