@@ -17,15 +17,8 @@ int main()
 
 	Player player(0,0,1);
 
-
-	Texture aTexture;
-	if (!aTexture.loadFromFile("images/soupCan.png")) {
-		std::cout << "Load failed\n";
-		system("pause");
-	}
-	player.setTexture(aTexture);
-
 	Platform platform(100, 25, 400, 300);
+	platform.getShape().setOrigin(platform.getWidth() / 2, platform.getHeight() / 2);
 
 	while (window.isOpen())
 	{
@@ -40,6 +33,34 @@ int main()
 		}
 
 		Update(player);
+
+		if (player.getSprite().getGlobalBounds().intersects(platform.getShape().getGlobalBounds())) {
+
+			if (player.getYPos()+player.getTexture().getSize().y  >= platform.getYPos() && player.getYPos()+ player.getTexture().getSize().y <= platform.getYPos() + platform.getHeight()/2-3) {
+				std::cout << "top\n";
+				player.setYPos(platform.getYPos() - (player.getTexture().getSize().y) - 0.5);
+			}
+			else if (player.getYPos() >= platform.getYPos()+platform.getHeight()/2-3 && player.getYPos() <= platform.getYPos() + platform.getHeight()) {
+				std::cout << "bot\n";
+				player.setYPos(platform.getYPos() + (platform.getHeight()) + 0.5);
+			}
+			else if (player.getXPos() <= platform.getXPos()) {
+				std::cout << "left\n";
+				player.setXPos(platform.getXPos() - (player.getTexture().getSize().x)-0.4);
+				player.setSpeed(0);
+			}
+			else if (player.getXPos() <= (platform.getXPos() + platform.getWidth())) {
+				std::cout<< "right\n";
+				player.setXPos(platform.getXPos() + platform.getWidth()+0.5);
+				player.setSpeed(0);
+			}
+
+		}
+		else {
+			//std::cout << "\n";
+			player.setSpeed(10);
+		}
+
 		Draw(window, player, platform);
 	}
 	return 0;
@@ -48,18 +69,19 @@ int main()
 
 
 void Update(Player &player) {
+	int speed = player.getSpeed();
 	if (Keyboard::isKeyPressed(Keyboard::D)) {
-		player.move(10, 0);
+		player.move(speed, 0);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::A)) {
-		player.move(-10, 0);
+		player.move(-speed, 0);
 	}
 	if (Keyboard::isKeyPressed(Keyboard::S)) {
-		player.move(0, 10);
+		player.move(0, speed);
 	}
 
 	if (Keyboard::isKeyPressed(Keyboard::W)) {
-		player.move(0, -10);
+		player.move(0, -speed);
 	}
 }
 

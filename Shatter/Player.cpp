@@ -9,6 +9,7 @@ Player::Player(float x, float y, float s) {
 	scale = s;
 	xPos = x;
 	yPos = y;
+	speed = 10;
 
 	if (!playerTexture.loadFromFile("images/soupCan.png")) {
 		std::cout << "Load failed\n";
@@ -30,16 +31,20 @@ void Player::setYPos(float  y) {
 	playerSprite.setPosition(xPos, yPos);
 }
 void Player::setTexture(Texture &texture) {playerSprite.setTexture(texture);}
+void Player::setSpeed(int vel) { speed = vel; }
 
 float Player::getXPos() { return xPos; }
 float Player::getYPos() { return yPos; }
 float Player::getScale() { return scale; }
 Texture Player::getTexture() { return playerTexture; }
 Sprite Player::getSprite() { return playerSprite; }
+int Player::getSpeed() { return speed; }
 
 void Player::move(float x, float y) {
 	playerSprite.move(x, y);
 	xPos += x;
 	yPos += y;
 }
+
+
 

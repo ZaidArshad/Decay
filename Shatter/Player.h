@@ -9,6 +9,7 @@ class Player
 	float scale;
 	float xPos;
 	float yPos;
+	int speed;
 	Texture playerTexture;
 	Sprite playerSprite;
 
@@ -18,10 +19,12 @@ public:
 	void setXPos(float x);
 	void setYPos(float  y);
 	void setTexture(Texture &texture);
+	void setSpeed(int vel);
 	float  getScale();
 	float  getXPos();
 	float  getYPos();
 	Texture getTexture();
 	Sprite getSprite();
+	int getSpeed();
 	void move(float x, float y);
 };
