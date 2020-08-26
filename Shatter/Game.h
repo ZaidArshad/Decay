@@ -5,8 +5,8 @@
 class Game
 {
 public:
-	void Update(Player& player);
-	void Draw(RenderWindow& window, Player& player, Platform& platform);
-	void Collision(Player& player, Platform& platform);
+	void update(Player& player);
+	void draw(RenderWindow& window, Player& player, Platform& platform);
+	void collision(Player& player, std::vector<Platform>& platform);
 };
 

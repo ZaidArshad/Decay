@@ -15,9 +15,11 @@ int main()
 	window.setFramerateLimit(60);
 
 	Game game;
-
 	Player player(0,0,1);
 	Platform platform(100, 25, 400, 300);
+
+	std::vector<Platform> platformsInLevel;
+	platformsInLevel.push_back(platform);
 
 	while (window.isOpen())
 	{
@@ -29,10 +31,9 @@ int main()
 			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
 				window.close();
 		}
-
-		game.Update(player);
-		game.Collision(player, platform);
-		game.Draw(window, player, platform);
+		game.update(player);
+		game.collision(player, platformsInLevel);
+		game.draw(window, player, platform);
 	}
 	return 0;
 };
