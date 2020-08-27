@@ -9,9 +9,12 @@ class Player
 	float scale;
 	float xPos;
 	float yPos;
-	int speed;
+	int xSpeed;
+	int ySpeed;
 	Texture playerTexture;
 	Sprite playerSprite;
+	bool canJump;
+	int jumpHeight;
 
 public:
 	Player(float x, float y, float s);
@@ -19,12 +22,20 @@ public:
 	void setXPos(float x);
 	void setYPos(float  y);
 	void setTexture(Texture &texture);
-	void setSpeed(int vel);
+	void setXSpeed(int xVel);
+	void setYSpeed(int yVel);
+	void setJump(bool jumped);
+	void setJumpHeight();
+
 	float  getScale();
 	float  getXPos();
 	float  getYPos();
 	Texture getTexture();
 	Sprite getSprite();
-	int getSpeed();
+	int getXSpeed();
+	int getYSpeed();
+	bool getJump();
+	int getJumpHeight();
+
 	void move(float x, float y);
 };

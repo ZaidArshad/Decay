@@ -15,11 +15,13 @@ int main()
 	window.setFramerateLimit(60);
 
 	Game game;
-	Player player(0,0,1);
+	Player player(400,0,1);
 	Platform platform(100, 25, 400, 300);
+	Platform platform2(100, 25, 500, 250);
 
 	std::vector<Platform> platformsInLevel;
 	platformsInLevel.push_back(platform);
+	platformsInLevel.push_back(platform2);
 
 	while (window.isOpen())
 	{
@@ -33,7 +35,7 @@ int main()
 		}
 		game.update(player);
 		game.collision(player, platformsInLevel);
-		game.draw(window, player, platform);
+		game.draw(window, player, platformsInLevel);
 	}
 	return 0;
 };
