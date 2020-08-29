@@ -15,6 +15,8 @@ int main() {
 
 	sf::RenderWindow window(VideoMode(1024, 576), "Shatter");
 	window.setFramerateLimit(60);
+	int time = 0;
+	int frame = 0;
 	Game game;
 
 	Player player(400,0,1);
@@ -46,6 +48,15 @@ int main() {
 		game.collision(player, platformsInLevel);
 		game.collision(player, breakPlatformsInLevel);
 		game.draw(window, player, platformsInLevel, breakPlatformsInLevel);
+
+
+
+		time += frame / 60;
+		if (frame == 60) {
+			frame = 0;
+			std::cout << time << "\n";
+		}
+		frame++;
 	}
 	return 0;
 };

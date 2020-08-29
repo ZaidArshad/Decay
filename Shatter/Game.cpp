@@ -15,12 +15,13 @@ void Game::update(Player& player) {
 		player.setJumpHeight();
 	}
 
-	if (!player.getJump() && player.getYPos() <= player.getJumpHeight()) {  //if in the air & have reached peak jump height
+	if (!player.getJump() && player.getYPos() <= player.getJumpHeight()) //if in the air & have reached peak jump height
 		player.setYSpeed(10); 
-	}
-	else if (player.getJump()) {
+	else if (player.getJump())
 		player.setYSpeed(10);
-	}
+	
+	if (player.getYSpeed() == 10)
+		player.setJump(false);
 
 	player.move((float) player.getXSpeed(), (float) player.getYSpeed());
 	player.setXSpeed(0);
@@ -72,7 +73,6 @@ void Game::collision(Player& player, std::vector<Platform>& platforms) {
 void Game::collision(Player& player, std::vector<BreakPlatform>& breakPlatforms) {
 	for (size_t i = 0; i < breakPlatforms.size(); i++) {
 		BreakPlatform platform = breakPlatforms[i];
-		std::cout << breakPlatforms[i].getIsTouched() << "\n";
 		if (player.getSprite().getGlobalBounds().intersects(platform.getShape().getGlobalBounds())) { //if player is touching a platform
 			if (player.getYPos() + player.getTexture().getSize().y >= platform.getYPos() && player.getYPos() + player.getTexture().getSize().y <= platform.getYPos() + platform.getHeight() / 2 - 3) {
 				player.setYPos(platform.getYPos() - (player.getTexture().getSize().y) - 0.5);
