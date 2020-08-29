@@ -5,6 +5,9 @@
 
 using namespace sf;
 
+Platform::Platform() {
+}
+
 Platform::Platform(float  w, float  h, float  x, float y) {
 	width = w;
 	height = h;
@@ -35,6 +38,7 @@ float  Platform::getWidth() { return width; }
 float  Platform::getHeight() { return height; }
 float Platform::getXPos() { return xPos; }
 float Platform::getYPos() { return yPos; }
+
 RectangleShape Platform::getShape() { return rectangleShape;}
 
 

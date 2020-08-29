@@ -19,8 +19,8 @@ class Player
 public:
 	Player(float x, float y, float s);
 	void setScale(float s);
-	void setXPos(float x);
-	void setYPos(float  y);
+	void setXPos(double x);
+	void setYPos(double  y);
 	void setTexture(Texture &texture);
 	void setXSpeed(int xVel);
 	void setYSpeed(int yVel);

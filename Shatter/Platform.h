@@ -6,13 +6,14 @@ using namespace sf;
 
 class Platform
 {
+public:
 	float width;
 	float height;
 	float xPos;
 	float yPos;
 	RectangleShape rectangleShape;
 
-public:
+	Platform();
 	Platform(float w, float h, float x, float y);
 	void setWidth(float w);
 	void setHeight(float h);
@@ -22,5 +23,6 @@ public:
 	float  getHeight();
 	float  getXPos();
 	float  getYPos();
+
 	RectangleShape getShape();
 };
