@@ -28,7 +28,7 @@ void Game::update(Player& player) {
 }
 
 void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms) {
-	window.clear(Color::Red);
+	window.clear(Color::Black);
 	for (size_t i = 0; i < platforms.size(); i++) {
 		window.draw(platforms[i].getShape());
 	}
@@ -78,7 +78,17 @@ void Game::collision(Player& player, std::vector<BreakPlatform>& breakPlatforms)
 				player.setYPos(platform.getYPos() - (player.getTexture().getSize().y) - 0.5);
 				player.setJump(true);
 				player.setYSpeed(0);
-				if (!breakPlatforms[i].getIsTouched()) {
+				if (breakPlatforms[i].getHealth() == 0 && breakPlatforms[i].getTimeOnLastTouch() + 2 <= std::time(nullptr)) {
+					std::cout << "1\n";
+					breakPlatforms[i].remove();
+				}
+				else if (breakPlatforms[i].getHealth() == 1 && !breakPlatforms[i].getIsTouched()) {
+					std::cout << "2\n";
+					breakPlatforms[i].setTimeOnLastTouch(std::time(nullptr));
+					breakPlatforms[i].touched();
+					}
+				else if (!breakPlatforms[i].getIsTouched() && breakPlatforms[i].getHealth() > 1) {
+					std::cout << "3\n";
 					breakPlatforms[i].setIsTouched(true);
 					breakPlatforms[i].touched();
 				}

@@ -2,7 +2,7 @@
 
 BreakPlatform::BreakPlatform(int healt, float  w, float  h, float  x, float y) {
 	health = healt;
-	rectangleShape.setFillColor(healthIndex[healt - 1]);
+	rectangleShape.setFillColor(healthIndex[healt]);
 
 	width = w;
 	height = h;
@@ -10,6 +10,7 @@ BreakPlatform::BreakPlatform(int healt, float  w, float  h, float  x, float y) {
 	yPos = y;
 	rectangleShape.setSize(Vector2f(width, height));
 	rectangleShape.setPosition(xPos, yPos);
+	std::time_t timeOnLastTouch = std::time(nullptr);
 }
 
 bool BreakPlatform::getIsTouched() { return isTouched; }
@@ -18,10 +19,13 @@ void BreakPlatform::setIsTouched(bool status) { isTouched = status; }
 
 void BreakPlatform::touched() {
 	health--;
-	rectangleShape.setFillColor(healthIndex[health - 1]);
-
-	if (health == 0) {
-		rectangleShape.setSize(Vector2f(0,0));
-	}
+	rectangleShape.setFillColor(healthIndex[health]);
 }
+
+void BreakPlatform::setTimeOnLastTouch(std::time_t t) { timeOnLastTouch = t; }
+
+void BreakPlatform::setHealth(int h) { health = h; };
 int BreakPlatform::getHealth() { return health; }
+void BreakPlatform::remove() { rectangleShape.setSize(Vector2f(0,0)); }
+
+std::time_t BreakPlatform::getTimeOnLastTouch() { return timeOnLastTouch; }
