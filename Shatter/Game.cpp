@@ -39,31 +39,29 @@ void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& pla
 	window.display();
 }
 
-
-
 void Game::collision(Player& player, std::vector<Platform>& platforms) {
 	for (size_t i = 0; i < platforms.size(); i++) {
 		Platform platform = platforms[i];
 		if (player.getSprite().getGlobalBounds().intersects(platform.getShape().getGlobalBounds())) { //if player is touching a platform
 			if (player.getYPos() + player.getTexture().getSize().y >= platform.getYPos() && player.getYPos() + player.getTexture().getSize().y <= platform.getYPos() + platform.getHeight() / 2 - 3) {
 				std::cout << "top\n";
-				player.setYPos(platform.getYPos() - (player.getTexture().getSize().y) - 0.5);
+				player.setYPos((float) (platform.getYPos() - (player.getTexture().getSize().y) - 0.5));
 				player.setJump(true);
 				player.setYSpeed(0);
 			}
 			else if (player.getYPos() >= platform.getYPos() + platform.getHeight() / 2 - 3 && player.getYPos() <= platform.getYPos() + platform.getHeight()) {
 				std::cout << "bot\n";
-				player.setYPos(platform.getYPos() + (platform.getHeight()) + 0.5);
+				player.setYPos((float) (platform.getYPos() + (platform.getHeight()) + 0.5));
 				player.setYSpeed(10);
 			}
 			else if (player.getXPos() <= platform.getXPos()) {
 				std::cout << "left\n";
-				player.setXPos(platform.getXPos() - (player.getTexture().getSize().x) - 0.4);
+				player.setXPos((float) (platform.getXPos() - (player.getTexture().getSize().x) - 0.4));
 				player.setXSpeed(0);
 			}
 			else if (player.getXPos() <= (platform.getXPos() + platform.getWidth())) {
 				std::cout << "right\n";
-				player.setXPos(platform.getXPos() + platform.getWidth() + 0.5);
+				player.setXPos((float) (platform.getXPos() + platform.getWidth() + 0.5));
 				player.setXSpeed(0);
 			}
 		}
@@ -73,43 +71,44 @@ void Game::collision(Player& player, std::vector<Platform>& platforms) {
 void Game::collision(Player& player, std::vector<BreakPlatform>& breakPlatforms) {
 	for (size_t i = 0; i < breakPlatforms.size(); i++) {
 		BreakPlatform platform = breakPlatforms[i];
-		if (player.getSprite().getGlobalBounds().intersects(platform.getShape().getGlobalBounds())) { //if player is touching a platform
+		if (player.getSprite().getGlobalBounds().intersects(platform.getShape().getGlobalBounds())) {
 			if (player.getYPos() + player.getTexture().getSize().y >= platform.getYPos() && player.getYPos() + player.getTexture().getSize().y <= platform.getYPos() + platform.getHeight() / 2 - 3) {
-				player.setYPos(platform.getYPos() - (player.getTexture().getSize().y) - 0.5);
+				player.setYPos((float) (platform.getYPos() - (player.getTexture().getSize().y) - 0.5));
 				player.setJump(true);
 				player.setYSpeed(0);
-				if (breakPlatforms[i].getHealth() == 0 && breakPlatforms[i].getTimeOnLastTouch() + 2 <= std::time(nullptr)) {
-					std::cout << "1\n";
+
+				if (platform.getHealth() == 0 && platform.getTimeOnLastTouch() + 2 <= std::time(nullptr)) {
 					breakPlatforms[i].remove();
 				}
-				else if (breakPlatforms[i].getHealth() == 1 && !breakPlatforms[i].getIsTouched()) {
-					std::cout << "2\n";
+				else if (platform.getHealth() == 1 && !platform.getIsTouched()) {
 					breakPlatforms[i].setTimeOnLastTouch(std::time(nullptr));
 					breakPlatforms[i].touched();
 					}
-				else if (!breakPlatforms[i].getIsTouched() && breakPlatforms[i].getHealth() > 1) {
-					std::cout << "3\n";
+				else if (!platform.getIsTouched() && platform.getHealth() > 1) {
 					breakPlatforms[i].setIsTouched(true);
 					breakPlatforms[i].touched();
 				}
 			}
 			else if (player.getYPos() >= platform.getYPos() + platform.getHeight() / 2 - 3 && player.getYPos() <= platform.getYPos() + platform.getHeight()) {
 				std::cout << "bot\n";
-				player.setYPos(platform.getYPos() + (platform.getHeight()) + 0.5);
+				player.setYPos((float) (platform.getYPos() + (platform.getHeight()) + 0.5));
 			}
 			else if (player.getXPos() <= platform.getXPos()) {
 				std::cout << "left\n";
-				player.setXPos(platform.getXPos() - (player.getTexture().getSize().x) - 0.4);
+				player.setXPos((float) (platform.getXPos() - player.getTexture().getSize().x - 0.4));
 				player.setXSpeed(0);
 			}
 			else if (player.getXPos() <= (platform.getXPos() + platform.getWidth())) {
 				std::cout << "right\n";
-				player.setXPos(platform.getXPos() + platform.getWidth() + 0.5);
+				player.setXPos((float) (platform.getXPos() + platform.getWidth() + 0.5));
 				player.setXSpeed(0);
 			}
 		}
 		else {
 			breakPlatforms[i].setIsTouched(false);
+			if (platform.getHealth() == 0 && platform.getTimeOnLastTouch() + 2 <= std::time(nullptr)) {
+				breakPlatforms[i].remove();
+			}
 		}
 	}
 }

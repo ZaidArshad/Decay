@@ -6,6 +6,10 @@
 using namespace sf;
 
 Platform::Platform() {
+	width = 0;
+	height = 0;
+	xPos = 0;
+	yPos = 0;
 }
 
 Platform::Platform(float  w, float  h, float  x, float y) {
@@ -40,13 +44,6 @@ float Platform::getXPos() { return xPos; }
 float Platform::getYPos() { return yPos; }
 
 RectangleShape Platform::getShape() { return rectangleShape;}
-
-
-
-
-
-
-
 
 
 

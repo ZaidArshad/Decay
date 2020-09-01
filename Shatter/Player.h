@@ -14,13 +14,13 @@ class Player
 	Texture playerTexture;
 	Sprite playerSprite;
 	bool canJump;
-	int jumpHeight;
+	float jumpHeight;
 
 public:
 	Player(float x, float y, float s);
 	void setScale(float s);
-	void setXPos(double x);
-	void setYPos(double  y);
+	void setXPos(float x);
+	void setYPos(float  y);
 	void setTexture(Texture &texture);
 	void setXSpeed(int xVel);
 	void setYSpeed(int yVel);
@@ -35,7 +35,7 @@ public:
 	int getXSpeed();
 	int getYSpeed();
 	bool getJump();
-	int getJumpHeight();
+	float getJumpHeight();
 
 	void move(float x, float y);
 };

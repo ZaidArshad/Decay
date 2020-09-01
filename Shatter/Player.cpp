@@ -12,7 +12,7 @@ Player::Player(float x, float y, float s) {
 	xSpeed = 0;
 	ySpeed = 10;
 	canJump = false;
-	//jumpHeight = 0;
+	jumpHeight = 0;
 
 	if (!playerTexture.loadFromFile("images/soupCan.png")) {
 		std::cout << "Load failed\n";
@@ -26,11 +26,11 @@ void Player::setScale(float s) {
 	scale = s;
 	playerSprite.setScale(scale, 1);
 }
-void Player::setXPos(double x) {
+void Player::setXPos(float x) {
 	xPos = x;
 	playerSprite.setPosition(xPos, yPos);
 }
-void Player::setYPos(double  y) {
+void Player::setYPos(float  y) {
 	yPos = y;
 	playerSprite.setPosition(xPos, yPos);
 }
@@ -48,7 +48,7 @@ Sprite Player::getSprite() { return playerSprite; }
 int Player::getXSpeed() { return xSpeed; }
 int Player::getYSpeed() { return ySpeed; }
 bool Player::getJump() { return canJump; }
-int Player::getJumpHeight() { return jumpHeight; }
+float Player::getJumpHeight() { return jumpHeight; }
 
 void Player::move(float x, float y) {
 	playerSprite.move(x, y);
