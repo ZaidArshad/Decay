@@ -36,6 +36,7 @@ public:
 	int getYSpeed();
 	bool getJump();
 	float getJumpHeight();
+	bool isOutside();
 
 	void move(float x, float y);
 };

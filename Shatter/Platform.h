@@ -11,7 +11,7 @@ public:
 	float height;
 	float xPos;
 	float yPos;
-	RectangleShape rectangleShape;
+	sf::RectangleShape rectangleShape;
 
 	Platform();
 	Platform(float w, float h, float x, float y);
@@ -24,5 +24,5 @@ public:
 	float  getXPos();
 	float  getYPos();
 
-	RectangleShape getShape();
+	sf::RectangleShape getShape();
 };

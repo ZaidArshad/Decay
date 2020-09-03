@@ -56,5 +56,10 @@ void Player::move(float x, float y) {
 	yPos += y;
 }
 
+bool Player::isOutside() {
+	if (yPos > 576 || yPos < 0) { return true; }
+	else { return false;  }
+}
+
 
 

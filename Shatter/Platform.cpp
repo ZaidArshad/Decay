@@ -43,22 +43,4 @@ float  Platform::getHeight() { return height; }
 float Platform::getXPos() { return xPos; }
 float Platform::getYPos() { return yPos; }
 
-RectangleShape Platform::getShape() { return rectangleShape;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+RectangleShape Platform::getShape() { return rectangleShape; }

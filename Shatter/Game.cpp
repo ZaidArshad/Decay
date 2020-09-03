@@ -27,7 +27,7 @@ void Game::update(Player& player) {
 	player.setXSpeed(0);
 }
 
-void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms) {
+void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms, sf::Text pog) {
 	window.clear(Color::Black);
 	for (size_t i = 0; i < platforms.size(); i++) {
 		window.draw(platforms[i].getShape());
@@ -36,6 +36,7 @@ void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& pla
 		window.draw(breakPlatforms[i].getShape());
 	}
 	window.draw(player.getSprite());
+	window.draw(pog);
 	window.display();
 }
 
@@ -77,7 +78,7 @@ void Game::collision(Player& player, std::vector<BreakPlatform>& breakPlatforms)
 				player.setJump(true);
 				player.setYSpeed(0);
 
-				if (platform.getHealth() == 0 && platform.getTimeOnLastTouch() + 2 <= std::time(nullptr)) {
+				if (platform.getHealth() == 0 && platform.getTimeOnLastTouch() + 1 <= std::time(nullptr)) {
 					breakPlatforms[i].remove();
 				}
 				else if (platform.getHealth() == 1 && !platform.getIsTouched()) {
@@ -106,7 +107,7 @@ void Game::collision(Player& player, std::vector<BreakPlatform>& breakPlatforms)
 		}
 		else {
 			breakPlatforms[i].setIsTouched(false);
-			if (platform.getHealth() == 0 && platform.getTimeOnLastTouch() + 2 <= std::time(nullptr)) {
+			if (platform.getHealth() == 0 && platform.getTimeOnLastTouch() + 1 <= std::time(nullptr)) {
 				breakPlatforms[i].remove();
 			}
 		}

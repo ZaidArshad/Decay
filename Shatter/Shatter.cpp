@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "BreakPlatform.h"
 #include "Level.h"
+#include "Prompt.h"
 
 using namespace sf;
 
@@ -27,6 +28,10 @@ int main() {
 		std::vector<BreakPlatform> breakPlatformsInLevel = level.getBreakPlatforms();
 
 
+		Prompt title(200,200,"arial.ttf",50,"Shatter",sf::Color::White);
+		Font ka1Font = title.getFont();
+
+
 		while (window.isOpen() && !level.isComplete(breakPlatformsInLevel)) {
 			Event event;
 			while (window.pollEvent(event)) {
@@ -38,11 +43,16 @@ int main() {
 				}
 			}
 
+			if (player.isOutside()) {
+				levelNumber--;
+				break;
+			}
+
 			game.update(player);
 			game.collision(player, platformsInLevel);
 			game.collision(player, breakPlatformsInLevel);
 			level.isComplete(breakPlatformsInLevel);
-			game.draw(window, player, platformsInLevel, breakPlatformsInLevel);
+			game.draw(window, player, platformsInLevel, breakPlatformsInLevel, title.getText());
 
 			time += frame / 60;
 			if (frame == 60) {
