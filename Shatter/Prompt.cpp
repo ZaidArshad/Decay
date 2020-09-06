@@ -1,5 +1,5 @@
 #include "Prompt.h"
-#include <iostream>
+#include "Processes.h"
 
 Prompt::Prompt(float xPos, float yPos, string fontName, int fSize, string text, sf::Color color) {
 	xPosition = xPos;
@@ -8,8 +8,7 @@ Prompt::Prompt(float xPos, float yPos, string fontName, int fSize, string text, 
 	textColor = color;
 	fontSize = fSize;
 
-	if (!font.loadFromFile("fonts/"+fontName))
-		std::cout << "did not load\n";
+	font = loadFont(fontName);
 
 	textObj.setFont(font);
 	textObj.setString(textString);
