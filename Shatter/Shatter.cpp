@@ -23,7 +23,7 @@ int main() {
 	for (int levelNumber = 1; levelNumber < 10; levelNumber++) {
 
 
-		Prompt title(379, 268, "bulkypix.ttf", 50, "Shatter", sf::Color::White);
+		Prompt title(379, 268, "bulkypix.ttf", 50, " ", sf::Color::White);
 		Font bulkyPix = title.getFont();
 
 		std::cout << "Level number: " << levelNumber << "\n";

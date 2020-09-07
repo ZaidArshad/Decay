@@ -22,13 +22,13 @@ Button::Button(float xPos, float yPos, string title, string fontName) {
 	border.setFillColor(Color::White);
 	border.setOrigin(border.getLocalBounds().width / 2, border.getLocalBounds().height / 2);
 	border.setPosition(xPosition, yPosition);
-	border.setFillColor(SECONDARY_COLOR);
+	border.setFillColor(Color::White);
 
 	inside.setSize(sf::Vector2f(width, height));
 	inside.setFillColor(Color::Blue);
 	inside.setOrigin(inside.getLocalBounds().width / 2, inside.getLocalBounds().height / 2);
 	inside.setPosition(xPosition, yPosition);
-	inside.setFillColor(PRIMARY_COLOR);
+	inside.setFillColor(Color::Black);
 
 	text.setPosition(inside.getPosition().x, inside.getPosition().y-5);
 
@@ -44,17 +44,21 @@ void Button::draw(RenderWindow& window) {
 }
 
 void Button::textColorShifter() {
-	if (fontR==0 || fontR == 255) {
-		colorIncrementer *= -1;
-		fontR += colorIncrementer * 3;
-		fontG += colorIncrementer * 3;
-		fontB += colorIncrementer * 3;
+	if (iterator < 255 && iterator >= 0) {
+		fontR++;
+		fontB--;
 	}
-	else {
-		fontR += colorIncrementer * 3;
-		fontG += colorIncrementer * 3;
-		fontB += colorIncrementer * 3;
+	else if (iterator < 510 && iterator >= 255) {
+		fontG++;
+		fontR--;
 	}
-	std::cout << fontR << "\n";
+	else if (iterator < 765 && iterator >= 510) {
+		fontB++;
+		fontG--;
+	}
+	else { iterator = -1; }
+	iterator++;
 	text.setFillColor(Color(fontR,fontG,fontB));
+	border.setFillColor(Color(fontR, fontG, fontB));
+
 }

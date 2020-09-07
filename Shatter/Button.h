@@ -19,10 +19,9 @@ class Button
 	sf::RectangleShape inside;
 	int fontR = 0;
 	int fontG = 0;
-	int fontB = 0;
-	int colorIncrementer = -1;
-	const Color PRIMARY_COLOR = Color(0,0,0);
-	const Color SECONDARY_COLOR = Color(255, 255, 255);
+	int fontB = 255;
+	int colorIncrementer = 1;
+	int iterator = 0;
 
 public:
 	Button(float xPos, float yPos, string title, string fontName);
