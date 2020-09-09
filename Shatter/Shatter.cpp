@@ -23,9 +23,6 @@ int main() {
 	for (int levelNumber = 1; levelNumber < 10; levelNumber++) {
 
 
-		Prompt title(379, 268, "bulkypix.ttf", 50, " ", sf::Color::White);
-		Font bulkyPix = title.getFont();
-
 		std::cout << "Level number: " << levelNumber << "\n";
 		Player player(400, 0, 1);
 		Level level(levelNumber);
@@ -39,7 +36,7 @@ int main() {
 				if (event.type == Event::Closed)
 					window.close();
 				if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
-					window.close();
+					pauseScreen(window);
 			}
 
 			if (player.isOutside()) {
@@ -51,7 +48,7 @@ int main() {
 			game.collision(player, platformsInLevel);
 			game.collision(player, breakPlatformsInLevel);
 			level.isComplete(breakPlatformsInLevel);
-			game.draw(window, player, platformsInLevel, breakPlatformsInLevel, title.getText());
+			game.draw(window, player, platformsInLevel, breakPlatformsInLevel);
 		}
 	}
 	return 0;

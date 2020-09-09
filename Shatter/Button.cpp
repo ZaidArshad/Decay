@@ -12,7 +12,8 @@ Button::Button(float xPos, float yPos, string title, string fontName) {
 
 	text.setString(name);
 	text.setFont(font);
-	text.setFillColor(Color(fontR,fontG,fontB));
+
+	text.setFillColor(Color::White);
 
 	width = text.getLocalBounds().width + MARGIN; //width of total button
 	height = text.getLocalBounds().height + MARGIN; //height of total button
@@ -35,12 +36,9 @@ Button::Button(float xPos, float yPos, string title, string fontName) {
 }
 
 void Button::draw(RenderWindow& window) {
-	window.clear(Color::Black);
 	window.draw(border);
 	window.draw(inside);
-	textColorShifter();
 	window.draw(text);
-	window.display();
 }
 
 void Button::textColorShifter() {
@@ -61,4 +59,18 @@ void Button::textColorShifter() {
 	text.setFillColor(Color(fontR,fontG,fontB));
 	border.setFillColor(Color(fontR, fontG, fontB));
 
+}
+
+void Button::mouseHover(RenderWindow &window) {
+	Mouse mouse;
+	if (border.getGlobalBounds().contains(mouse.getPosition(window).x, mouse.getPosition(window).y)) {
+		border.setFillColor(Color::Black);
+		inside.setFillColor(Color::White);
+		text.setFillColor(Color::Black);
+	}
+	else {
+		border.setFillColor(Color::White);
+		inside.setFillColor(Color::Black);
+		text.setFillColor(Color::White);
+	}
 }

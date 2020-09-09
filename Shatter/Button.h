@@ -27,5 +27,6 @@ public:
 	Button(float xPos, float yPos, string title, string fontName);
 	void draw(RenderWindow &window);
 	void textColorShifter();
+	void mouseHover(RenderWindow& window);
 };
 

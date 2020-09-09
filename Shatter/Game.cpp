@@ -27,7 +27,7 @@ void Game::update(Player& player) {
 	player.setXSpeed(0);
 }
 
-void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms, sf::Text pog) {
+void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms) {
 	window.clear(Color::Black);
 	for (size_t i = 0; i < platforms.size(); i++) {
 		window.draw(platforms[i].getShape());
@@ -36,7 +36,6 @@ void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& pla
 		window.draw(breakPlatforms[i].getShape());
 	}
 	window.draw(player.getSprite());
-	window.draw(pog);
 	window.display();
 }
 
