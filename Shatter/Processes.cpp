@@ -1,3 +1,4 @@
+#pragma once
 #include "Processes.h"
 #include "Button.h"
 #include "Prompt.h"
@@ -35,23 +36,33 @@ void titleScreen(RenderWindow& window) {
 	}
 }
 
-void pauseScreen(RenderWindow& window) {
+void pauseScreen(RenderWindow& window, bool &restartState) {
 	bool isPaused = true;
 	Event event;
-	Button resumeButton(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y, "Resume", "ka1.ttf");
+	Button resumeButton(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y-120, "Resume", "bulkypix.ttf");
+	Button restartButton(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y, "Restart", "bulkypix.ttf");
+	Button quitButton(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y+120, "Quit", "bulkypix.ttf");
 	Prompt backgroundColor(0, 0, "ka1.ttf" ,30 , " ", Color::White);
 
 	while (window.isOpen() && isPaused) {
+		isPaused = !resumeButton.mouseInteract(window);
+
+		if (restartButton.mouseInteract(window)) {
+			isPaused = false;
+			restartState = true;
+		}
+
 		while (window.pollEvent(event)) {
-			if (event.type == Event::Closed)
+			if (event.type == Event::Closed || quitButton.mouseInteract(window))
 				window.close();
 			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
 				isPaused = false;
 		}
-		resumeButton.mouseHover(window);
 		backgroundColor.textColorShifter();
 		window.clear(backgroundColor.getColor());
 		resumeButton.draw(window);
+		restartButton.draw(window);
+		quitButton.draw(window);
 		window.display();
 	}
 }

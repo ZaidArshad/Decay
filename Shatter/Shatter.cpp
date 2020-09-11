@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include "SFML\Window.hpp"
 #include "SFML\System.hpp"
@@ -13,11 +14,10 @@
 using namespace sf;
 
 int main() {
-
 	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Shatter");
+	bool restartState = false;
 	window.setFramerateLimit(60);
 	Game game;
-
 	titleScreen(window);
 
 	for (int levelNumber = 1; levelNumber < 10; levelNumber++) {
@@ -31,15 +31,17 @@ int main() {
 
 
 		while (window.isOpen() && !level.isComplete(breakPlatformsInLevel)) {
+
 			Event event;
 			while (window.pollEvent(event)) {
 				if (event.type == Event::Closed)
 					window.close();
 				if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
-					pauseScreen(window);
+					pauseScreen(window, restartState);
 			}
 
-			if (player.isOutside()) {
+			if (player.isOutside() || restartState) {
+				restartState = false;
 				levelNumber--;
 				break;
 			}

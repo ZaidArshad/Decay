@@ -13,4 +13,4 @@ const int MIDDLE_OF_SCREEN_Y = SCREEN_HEIGHT / 2;
 Font loadFont(std::string fontFileName);
 void titleScreen(RenderWindow &window);
 Color colorShifter(Color currentColor);
-void pauseScreen(RenderWindow &window);
+void pauseScreen(RenderWindow &window, bool &restartState);

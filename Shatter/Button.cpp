@@ -11,6 +11,7 @@ Button::Button(float xPos, float yPos, string title, string fontName) {
 
 
 	text.setString(name);
+	text.setCharacterSize(50);
 	text.setFont(font);
 
 	text.setFillColor(Color::White);
@@ -61,16 +62,19 @@ void Button::textColorShifter() {
 
 }
 
-void Button::mouseHover(RenderWindow &window) {
+bool Button::mouseInteract(RenderWindow &window) {
 	Mouse mouse;
 	if (border.getGlobalBounds().contains(mouse.getPosition(window).x, mouse.getPosition(window).y)) {
 		border.setFillColor(Color::Black);
 		inside.setFillColor(Color::White);
 		text.setFillColor(Color::Black);
+		if (mouse.isButtonPressed(Mouse::Button::Left))
+			return true;
 	}
 	else {
 		border.setFillColor(Color::White);
 		inside.setFillColor(Color::Black);
 		text.setFillColor(Color::White);
+		return false;
 	}
 }
