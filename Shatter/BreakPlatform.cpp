@@ -22,10 +22,10 @@ void BreakPlatform::touched() {
 	rectangleShape.setFillColor(healthIndex[health]);
 }
 
+
 void BreakPlatform::setTimeOnLastTouch(std::time_t t) { timeOnLastTouch = t; }
 
 void BreakPlatform::setHealth(int h) { health = h; };
 int BreakPlatform::getHealth() { return health; }
 void BreakPlatform::remove() { rectangleShape.setSize(Vector2f(0,0)); }
-
 std::time_t BreakPlatform::getTimeOnLastTouch() { return timeOnLastTouch; }

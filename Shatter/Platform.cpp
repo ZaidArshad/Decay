@@ -18,9 +18,10 @@ Platform::Platform(float  w, float  h, float  x, float y) {
 	xPos = x;
 	yPos = y;
 	rectangleShape.setSize(Vector2f(width, height));
-	rectangleShape.setPosition(xPos, yPos);
+	rectangleShape.setPosition(xPos, yPos); 
 }
-void Platform::setWidth(float  w) {
+
+void Platform::setWidth(float  w){
 	width = w;
 	rectangleShape.setSize(Vector2f(*&width, *&height));
 }
@@ -37,10 +38,13 @@ void Platform::setYPos(float  y) {
 	yPos = y;
 	rectangleShape.setPosition(xPos, yPos);
 }
+void Platform::setPlatformId(int id) { platformId = id; }
 
 float  Platform::getWidth() { return width; }
 float  Platform::getHeight() { return height; }
 float Platform::getXPos() { return xPos; }
 float Platform::getYPos() { return yPos; }
+int Platform::getPlatformId() { return platformId; }
+
 
 RectangleShape Platform::getShape() { return rectangleShape; }

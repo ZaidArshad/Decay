@@ -12,6 +12,7 @@ public:
 	float xPos;
 	float yPos;
 	sf::RectangleShape rectangleShape;
+	int platformId;
 
 	Platform();
 	Platform(float w, float h, float x, float y);
@@ -19,10 +20,13 @@ public:
 	void setHeight(float h);
 	void setXPos(float x);
 	void setYPos(float  y);
-	float  getWidth();
-	float  getHeight();
-	float  getXPos();
-	float  getYPos();
+	void setPlatformId(int id);
+
+	float getWidth();
+	float getHeight();
+	float getXPos();
+	float getYPos();
+	int getPlatformId();
 
 	sf::RectangleShape getShape();
 };

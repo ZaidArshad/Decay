@@ -17,13 +17,15 @@ class BreakPlatform : public Platform
 		Color(75,0,130),
 		Color(148,0,211)};
 	std::time_t timeOnLastTouch;
+
 public:
 	BreakPlatform(int healt, float  w, float  h, float  x, float y);
 	void touched();
-	bool getIsTouched();
 	void setIsTouched(bool status);
 	void setHealth(int h);
 	void remove();
+
+	bool getIsTouched();
 	int getHealth();
 	std::time_t getTimeOnLastTouch();
 	void setTimeOnLastTouch(std::time_t t);

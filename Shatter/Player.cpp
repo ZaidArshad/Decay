@@ -13,6 +13,7 @@ Player::Player(float x, float y, float s) {
 	ySpeed = 10;
 	canJump = false;
 	jumpHeight = 0;
+	platformId = 0;
 
 	if (!playerTexture.loadFromFile("images/soupCan.png")) {
 		std::cout << "Load failed\n";
@@ -39,6 +40,7 @@ void Player::setXSpeed(int xVel) { xSpeed = xVel; }
 void Player::setYSpeed(int yVel) { ySpeed = yVel; }
 void Player::setJump(bool jumped) { canJump = jumped; }
 void Player::setJumpHeight() { jumpHeight = yPos - 100; }
+void Player::setPlatformId(int id) { platformId = id; }
 
 float Player::getXPos() { return xPos; }
 float Player::getYPos() { return yPos; }
@@ -49,6 +51,7 @@ int Player::getXSpeed() { return xSpeed; }
 int Player::getYSpeed() { return ySpeed; }
 bool Player::getJump() { return canJump; }
 float Player::getJumpHeight() { return jumpHeight; }
+int Player::getPlatformId() { return platformId; }
 
 void Player::move(float x, float y) {
 	playerSprite.move(x, y);

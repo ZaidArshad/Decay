@@ -51,6 +51,9 @@ int main() {
 			game.collision(player, breakPlatformsInLevel);
 			level.isComplete(breakPlatformsInLevel);
 			game.draw(window, player, platformsInLevel, breakPlatformsInLevel);
+
+			std::cout << player.getPlatformId() << "\n";
+
 		}
 	}
 	return 0;

@@ -15,6 +15,7 @@ class Player
 	Sprite playerSprite;
 	bool canJump;
 	float jumpHeight;
+	int platformId;
 
 public:
 	Player(float x, float y, float s);
@@ -26,6 +27,7 @@ public:
 	void setYSpeed(int yVel);
 	void setJump(bool jumped);
 	void setJumpHeight();
+	void setPlatformId(int id);
 
 	float  getScale();
 	float  getXPos();
@@ -37,6 +39,7 @@ public:
 	bool getJump();
 	float getJumpHeight();
 	bool isOutside();
+	int getPlatformId();
 
 	void move(float x, float y);
 };
