@@ -20,11 +20,11 @@ int main() {
 	Game game;
 	titleScreen(window);
 
-	for (int levelNumber = 1; levelNumber < 10; levelNumber++) {
+	for (int levelNumber = 4; levelNumber < 10; levelNumber++) {
 
 
 		std::cout << "Level number: " << levelNumber << "\n";
-		Player player(400, 0, 1);
+		Player player(startPositions[levelNumber-1].x, startPositions[levelNumber-1].y, 1);
 		Level level(levelNumber);
 		std::vector<Platform> platformsInLevel = level.getPlatforms();
 		std::vector<BreakPlatform> breakPlatformsInLevel = level.getBreakPlatforms();

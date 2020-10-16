@@ -7,8 +7,13 @@
 class Game
 {
 public:
+	// Updates player position and controls gravity
 	void update(Player& player);
+
+	// Draws the player, platforms and breakplatforms onto the screen
 	void draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms);
+
+	// Detects the collision between the player and platforms
 	void collision(Player& player, std::vector<Platform>& platform);
 	void collision(Player& player, std::vector<BreakPlatform>& breakPlatforms);
 };

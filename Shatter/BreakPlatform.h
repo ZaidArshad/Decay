@@ -2,11 +2,20 @@
 #include "Platform.h"
 #include <ctime>
 #include <iostream>
+#include <chrono>
 
 class BreakPlatform : public Platform
 {
+	// Health attribute
 	int health;
+
+	// Boolean data
 	bool isTouched = false;
+
+	// Time data (initialized with time on creation)
+	std::time_t timeOnLastTouch = std::time(nullptr);
+
+	// Color index for changing platform color relative to health
 	Color healthIndex[8] = {
 		Color::White,
 		Color::Red,
@@ -16,18 +25,28 @@ class BreakPlatform : public Platform
 		Color::Blue,
 		Color(75,0,130),
 		Color(148,0,211)};
-	std::time_t timeOnLastTouch;
+
+
 
 public:
-	BreakPlatform(int healt, float  w, float  h, float  x, float y);
-	void touched();
-	void setIsTouched(bool status);
-	void setHealth(int h);
-	void remove();
+	//------Constructors------//
+	BreakPlatform(int hp, float  w, float  h, float  x, float y);
 
+	//------Setter Methods------//
+	void setIsTouched(bool status);
+	void setHealth(int hp);
+	void setTimeOnLastTouch(std::time_t t);
+
+
+	//------Getter Methods------//
 	bool getIsTouched();
 	int getHealth();
 	std::time_t getTimeOnLastTouch();
-	void setTimeOnLastTouch(std::time_t t);
+
+	// Decreases the health of the platform and changes color
+	void touched();
+
+	// Removes the platfrom from the screen but is still alive in scope
+	void remove();
 };
 
