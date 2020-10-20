@@ -6,10 +6,16 @@ void Game::update(Player& player) {
 	// Keybinds
 	if (Keyboard::isKeyPressed(Keyboard::D)) {
 		player.setXSpeed(10);
+		player.animateRolling("right");
 	}
-	if (Keyboard::isKeyPressed(Keyboard::A)) {
+	else if (Keyboard::isKeyPressed(Keyboard::A)) {
 		player.setXSpeed(-10);
+		player.animateRolling("left");
 	}
+	else {
+		player.animateRolling("still");
+	}
+
 	if (Keyboard::isKeyPressed(Keyboard::W) && player.getJump()) {
 		player.setJump(false);
 		player.setYSpeed(-10);
@@ -55,25 +61,26 @@ void Game::collision(Player& player, std::vector<Platform>& platforms) {
 	for (size_t i = 0; i < platforms.size(); i++) {
 		Platform platform = platforms[i];
 		if (player.getSprite().getGlobalBounds().intersects(platform.getShape().getGlobalBounds())) { //if player is touching a platform
+
+			// Top of the platform
 			if (player.getYPos() + player.getTexture().getSize().y >= platform.getYPos() && player.getYPos() + player.getTexture().getSize().y <= platform.getYPos() + platform.getHeight() / 2) {
-				std::cout << "top\n";
 				player.setYPos((float) (platform.getYPos() - (player.getTexture().getSize().y) - 0.5));
 				player.setJump(true);
 				player.setYSpeed(0);
 				player.setPlatformId(platform.getPlatformId());
 			}
+			// Bot of the platform
 			else if (player.getYPos() >= platform.getYPos() + platform.getHeight() / 2 && player.getYPos() <= platform.getYPos() + platform.getHeight()) {
-				std::cout << "bot\n";
 				player.setYPos((float) (platform.getYPos() + (platform.getHeight()) + 0.5));
 				player.setYSpeed(10);
 			}
+			// Left of the platform
 			else if (player.getXPos() <= platform.getXPos()) {
-				std::cout << "left\n";
 				player.setXPos((float) (platform.getXPos() - (player.getTexture().getSize().x) - 0.4));
 				player.setXSpeed(0);
 			}
+			// Right of the platform
 			else if (player.getXPos() <= (platform.getXPos() + platform.getWidth())) {
-				std::cout << "right\n";
 				player.setXPos((float) (platform.getXPos() + platform.getWidth() + 0.5));
 				player.setXSpeed(0);
 			}
@@ -113,6 +120,7 @@ void Game::collision(Player& player, std::vector<BreakPlatform>& breakPlatforms)
 			// Bottom of platform
 			else if (player.getYPos() >= platform.getYPos() + platform.getHeight() / 2 && player.getYPos() <= platform.getYPos() + platform.getHeight()) {
 				player.setYPos((float) (platform.getYPos() + (platform.getHeight()) + 0.5));
+				player.setYSpeed(10);
 			}
 			// Left of platform
 			else if (player.getXPos() <= platform.getXPos()) {

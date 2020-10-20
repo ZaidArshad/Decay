@@ -20,7 +20,7 @@ int main() {
 	Game game;
 	titleScreen(window);
 
-	for (int levelNumber = 4; levelNumber < 10; levelNumber++) {
+	for (int levelNumber = 1; levelNumber < 10; levelNumber++) {
 
 
 		std::cout << "Level number: " << levelNumber << "\n";
@@ -51,8 +51,6 @@ int main() {
 			game.collision(player, breakPlatformsInLevel);
 			level.isComplete(breakPlatformsInLevel);
 			game.draw(window, player, platformsInLevel, breakPlatformsInLevel);
-
-			std::cout << player.getPlatformId() << "\n";
 
 		}
 	}

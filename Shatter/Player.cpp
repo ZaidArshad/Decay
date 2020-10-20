@@ -14,14 +14,15 @@ Player::Player(float x, float y, float s) {
 	canJump = false;
 	jumpHeight = 0;
 	platformId = 0;
+	rollingSpriteId = 0;
+	frame = 0;
 
-	if (!playerTexture.loadFromFile("images/soupCan.png")) {
+	if (!playerTexture.loadFromFile("images/can.png")) {
 		std::cout << "Load failed\n";
 		system("pause");
 	}
 	playerSprite.setTexture(playerTexture);
 	playerSprite.setPosition(xPos, yPos);
-	playerSprite.setScale(scale, 1);
 }
 void Player::setScale(float s) {
 	scale = s;
@@ -35,6 +36,8 @@ void Player::setYPos(float  y) {
 	yPos = y;
 	playerSprite.setPosition(xPos, yPos);
 }
+void Player::setSprite(Sprite sprite) { playerSprite = sprite; }
+
 void Player::setTexture(Texture &texture) {playerSprite.setTexture(texture);}
 void Player::setXSpeed(int xVel) { xSpeed = xVel; }
 void Player::setYSpeed(int yVel) { ySpeed = yVel; }
@@ -60,9 +63,63 @@ void Player::move(float x, float y) {
 }
 
 bool Player::isOutside() {
-	if (yPos > 576) { return true; }
+	if (yPos > SCREEN_HEIGHT) { return true; }
 	else { return false;  }
 }
 
+void Player::animateRolling(String direction) {
+	bool isRolling = true;
+	frame += 1;
+
+	// Can only change sprite every 4 frames or more
+	if (frame > 4) {
+
+		if (!canSpriteSheet.loadFromFile("images/canRollingSpriteSheet.png")) {
+			std::cout << "Load failed\n";
+			system("pause");
+		}
+
+		if (direction == "left") {
+			rollingSpriteId--;
+
+			// If spritesheet wants to left on the first frame set it to the last frame
+			if (rollingSpriteId < 0)
+				rollingSpriteId = 3;
+		}
+
+		else if (direction == "right") {
+			rollingSpriteId++;
+			if (rollingSpriteId > 3)
+				rollingSpriteId = 0;
+		}
+
+		// If the can is not rolling
+		else {
+			rollingSpriteId = 0;
+			isRolling = false;
+		}
+
+		// If the can is rolling
+		if (isRolling) {
+			// Gets the frame from the sprite sheet
+			IntRect frameSize(50 * rollingSpriteId, 0, 50, 50);
+			Sprite canSpriteRolling(canSpriteSheet, frameSize);
+			playerSprite = canSpriteRolling;
+			playerSprite.setPosition(xPos, yPos);
+		}
+
+		// If the sprite is not being animated set it to its default position
+		else {
+			Sprite sprite;
+			sprite.setTexture(playerTexture);
+			playerSprite = sprite;
+			playerSprite.setPosition(xPos, yPos);
+		}
+
+		// Resets the frame count
+		frame = 0;
+	}
+
+}
 
 

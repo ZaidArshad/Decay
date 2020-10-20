@@ -5,8 +5,8 @@
 
 using namespace sf;
 
-const int SCREEN_WIDTH = 1024;
-const int SCREEN_HEIGHT = 576;
+const int SCREEN_WIDTH = 1000;
+const int SCREEN_HEIGHT = 800;
 const int MIDDLE_OF_SCREEN_X = SCREEN_WIDTH / 2;
 const int MIDDLE_OF_SCREEN_Y = SCREEN_HEIGHT / 2;
 

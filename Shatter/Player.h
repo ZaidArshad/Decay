@@ -1,6 +1,7 @@
 #pragma once
 #include"SFML\System.hpp"
 #include"SFML\Graphics.hpp"
+#include"Processes.h"
 
 using namespace sf;
 
@@ -12,10 +13,13 @@ class Player
 	int xSpeed;
 	int ySpeed;
 	Texture playerTexture;
+	Texture canSpriteSheet;
 	Sprite playerSprite;
 	bool canJump;
 	float jumpHeight;
 	int platformId;
+	int rollingSpriteId;
+	int frame;
 
 public:
 	Player(float x, float y, float s);
@@ -28,6 +32,7 @@ public:
 	void setJump(bool jumped);
 	void setJumpHeight();
 	void setPlatformId(int id);
+	void setSprite(Sprite sprite);
 
 	float  getScale();
 	float  getXPos();
@@ -42,4 +47,5 @@ public:
 	int getPlatformId();
 
 	void move(float x, float y);
+	void animateRolling(String direction);
 };
