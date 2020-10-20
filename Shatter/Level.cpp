@@ -5,16 +5,16 @@ Level::Level(int l) {
 	
 	switch(level) {
 	case 1: {
-		Platform platform(100, 20, 50, MIDDLE_OF_SCREEN_Y);
+		Platform platform(1000, 20, 0, 780);
 		platformsInLevel.push_back(platform);
 
-		BreakPlatform breaker1(4, 100, 20, 250, MIDDLE_OF_SCREEN_Y);
+		BreakPlatform breaker1(1, 100, 20, 190, 630);
 		breakPlatformsInLevel.push_back(breaker1);
-		BreakPlatform breaker2(3, 100, 20, 450, MIDDLE_OF_SCREEN_Y);
+		BreakPlatform breaker2(3, 100, 20, 350, 540);
 		breakPlatformsInLevel.push_back(breaker2);
-		BreakPlatform breaker3(3, 100, 20, 650, MIDDLE_OF_SCREEN_Y);
+		BreakPlatform breaker3(3, 100, 20, 560, 480);
 		breakPlatformsInLevel.push_back(breaker3);
-		BreakPlatform breaker4(2, 100, 20, 850, MIDDLE_OF_SCREEN_Y);
+		BreakPlatform breaker4(2, 100, 20, 350, 350);
 		breakPlatformsInLevel.push_back(breaker4);
 		break;
 	}

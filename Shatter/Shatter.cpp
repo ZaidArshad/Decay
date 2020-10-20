@@ -38,6 +38,8 @@ int main() {
 					window.close();
 				if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
 					pauseScreen(window, restartState);
+				if (event.type == Event::KeyReleased && event.key.code == Keyboard::W)
+					player.setWHeld(false);
 			}
 
 			if (player.isOutside() || restartState) {

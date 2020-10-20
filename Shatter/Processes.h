@@ -12,7 +12,7 @@ const int MIDDLE_OF_SCREEN_Y = SCREEN_HEIGHT / 2;
 
 const Vector2f startPositions[10] = {
 	// Level 1
-	Vector2f(100, MIDDLE_OF_SCREEN_Y - 200),
+	Vector2f(100, 700),
 	// Level 2
 	Vector2f(100, MIDDLE_OF_SCREEN_Y - 100),
 	// Level 3

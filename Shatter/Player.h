@@ -20,6 +20,7 @@ class Player
 	int platformId;
 	int rollingSpriteId;
 	int frame;
+	bool wHeld;
 
 public:
 	Player(float x, float y, float s);
@@ -33,6 +34,7 @@ public:
 	void setJumpHeight();
 	void setPlatformId(int id);
 	void setSprite(Sprite sprite);
+	void setWHeld(bool state);
 
 	float  getScale();
 	float  getXPos();
@@ -44,6 +46,7 @@ public:
 	bool getJump();
 	float getJumpHeight();
 	bool isOutside();
+	bool getWHeld();
 	int getPlatformId();
 
 	void move(float x, float y);

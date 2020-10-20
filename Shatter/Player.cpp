@@ -16,6 +16,7 @@ Player::Player(float x, float y, float s) {
 	platformId = 0;
 	rollingSpriteId = 0;
 	frame = 0;
+	wHeld = false;
 
 	if (!playerTexture.loadFromFile("images/can.png")) {
 		std::cout << "Load failed\n";
@@ -42,8 +43,10 @@ void Player::setTexture(Texture &texture) {playerSprite.setTexture(texture);}
 void Player::setXSpeed(int xVel) { xSpeed = xVel; }
 void Player::setYSpeed(int yVel) { ySpeed = yVel; }
 void Player::setJump(bool jumped) { canJump = jumped; }
-void Player::setJumpHeight() { jumpHeight = yPos - 100; }
+void Player::setJumpHeight() { jumpHeight = yPos - 150; }
 void Player::setPlatformId(int id) { platformId = id; }
+
+void Player::setWHeld(bool state) { wHeld = state; }
 
 float Player::getXPos() { return xPos; }
 float Player::getYPos() { return yPos; }
@@ -66,6 +69,8 @@ bool Player::isOutside() {
 	if (yPos > SCREEN_HEIGHT) { return true; }
 	else { return false;  }
 }
+
+bool Player::getWHeld() { return wHeld; }
 
 void Player::animateRolling(String direction) {
 	bool isRolling = true;
