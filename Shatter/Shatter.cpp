@@ -19,10 +19,9 @@ int main() {
 	window.setFramerateLimit(60);
 	Game game;
 	titleScreen(window);
+	fade(window, 1);
 
 	for (int levelNumber = 1; levelNumber < 10; levelNumber++) {
-
-
 		std::cout << "Level number: " << levelNumber << "\n";
 		Player player(startPositions[levelNumber-1].x, startPositions[levelNumber-1].y, 1);
 		Level level(levelNumber);
@@ -40,9 +39,15 @@ int main() {
 					pauseScreen(window, restartState);
 				if (event.type == Event::KeyReleased && event.key.code == Keyboard::W)
 					player.setWHeld(false);
+				if (event.type == Event::KeyPressed && event.key.code == Keyboard::R) {
+					restartState = true;
+				}
 			}
 
 			if (player.isOutside() || restartState) {
+				if (player.isOutside())
+					deathPrompt(window);
+
 				restartState = false;
 				levelNumber--;
 				break;
@@ -51,10 +56,11 @@ int main() {
 			game.update(player);
 			game.collision(player, platformsInLevel);
 			game.collision(player, breakPlatformsInLevel);
-			level.isComplete(breakPlatformsInLevel);
 			game.draw(window, player, platformsInLevel, breakPlatformsInLevel);
 
+
 		}
+		fade(window, levelNumber);
 	}
 	return 0;
 };

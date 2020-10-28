@@ -24,6 +24,10 @@ sf::Text Prompt::getText() { return textObj; }
 sf::Font Prompt::getFont() { return font; }
 sf::Color Prompt::getColor() { return Color(fontR, fontG, fontB, alpha); }
 
+void Prompt::setColor(sf::Color c) {
+	textObj.setFillColor(c);
+}
+
 void Prompt::textColorShifter() {
 	if (iterator < 255 && iterator >= 0) {
 		fontR++;

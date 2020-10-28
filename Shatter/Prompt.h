@@ -28,5 +28,6 @@ public:
 	void textColorShifter();
 	void blink();
 	sf::Color getColor();
+	void setColor(sf::Color c);
 };
 

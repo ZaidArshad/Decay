@@ -21,6 +21,7 @@ class Player
 	int rollingSpriteId;
 	int frame;
 	bool wHeld;
+	bool topStatus;
 
 public:
 	Player(float x, float y, float s);
@@ -35,6 +36,7 @@ public:
 	void setPlatformId(int id);
 	void setSprite(Sprite sprite);
 	void setWHeld(bool state);
+	void setTop(bool top);
 
 	float  getScale();
 	float  getXPos();
@@ -48,6 +50,7 @@ public:
 	bool isOutside();
 	bool getWHeld();
 	int getPlatformId();
+	bool getTop();
 
 	void move(float x, float y);
 	void animateRolling(String direction);

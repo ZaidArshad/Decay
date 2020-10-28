@@ -66,3 +66,40 @@ void pauseScreen(RenderWindow& window, bool &restartState) {
 		window.display();
 	}
 }
+
+void fade(RenderWindow& window, int level) {
+
+	RectangleShape screenOverlay(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
+	screenOverlay.setPosition(0, 0);
+	Prompt levelPrompt(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y, "bulkypix.ttf", 100, "Level " + std::to_string(level) , Color::White);
+
+	for (int alpha = 0; alpha <= 255; alpha += 8) {
+		screenOverlay.setFillColor(Color(0, 0, 0, alpha));
+		levelPrompt.setColor(Color(255, 255, 255, alpha));
+		window.draw(screenOverlay);
+		window.draw(levelPrompt.getText());
+		window.display();
+	}
+}
+
+// Appears when the user dies
+void deathPrompt(RenderWindow& window) {
+	// Checks if the user pressed R
+	bool isDead = true;
+	Prompt deadPrompt(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y-50, "bulkypix.ttf", 100, "YOU DIED", Color::White);
+	Prompt restartPrompt(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y+50, "ka1.ttf", 30, "press r to restart", Color::White);
+
+	while (isDead) {
+		deadPrompt.textColorShifter();
+		restartPrompt.textColorShifter();
+		window.draw(deadPrompt.getText());
+		window.draw(restartPrompt.getText());
+		window.display();
+
+		// If the "R" key is pressed continue the game
+		if (Keyboard::isKeyPressed(Keyboard::R))
+			isDead = false;
+		else if (Keyboard::isKeyPressed(Keyboard::Escape))
+			window.close();
+	}
+}

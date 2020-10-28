@@ -17,6 +17,7 @@ Player::Player(float x, float y, float s) {
 	rollingSpriteId = 0;
 	frame = 0;
 	wHeld = false;
+	topStatus = false;
 
 	if (!playerTexture.loadFromFile("images/can.png")) {
 		std::cout << "Load failed\n";
@@ -69,6 +70,10 @@ bool Player::isOutside() {
 	if (yPos > SCREEN_HEIGHT) { return true; }
 	else { return false;  }
 }
+
+bool Player::getTop() { return topStatus;  }
+
+void Player::setTop(bool top) { topStatus = top; }
 
 bool Player::getWHeld() { return wHeld; }
 
