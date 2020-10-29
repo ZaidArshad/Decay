@@ -71,7 +71,7 @@ void fade(RenderWindow& window, int level) {
 
 	RectangleShape screenOverlay(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
 	screenOverlay.setPosition(0, 0);
-	Prompt levelPrompt(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y, "bulkypix.ttf", 100, "Level " + std::to_string(level) , Color::White);
+	Prompt levelPrompt(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y, "bulkypix.ttf", 100, "Level " + std::to_string(level+1) , Color::White);
 
 	for (int alpha = 0; alpha <= 255; alpha += 8) {
 		screenOverlay.setFillColor(Color(0, 0, 0, alpha));

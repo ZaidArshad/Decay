@@ -15,6 +15,7 @@ BreakPlatform::BreakPlatform(int hp, float  w, float  h, float  x, float y) {
 	// Setting position and size
 	rectangleShape.setSize(Vector2f(width, height));
 	rectangleShape.setPosition(xPos, yPos);
+	rectangleShape.setOrigin(0, 0);
 }
 
 

@@ -19,7 +19,8 @@ int main() {
 	window.setFramerateLimit(60);
 	Game game;
 	titleScreen(window);
-	fade(window, 1);
+	fade(window, 0);
+	Prompt background(0, 0, "bulkypix.ttf", 0, "", Color::White);
 
 	for (int levelNumber = 1; levelNumber < 10; levelNumber++) {
 		std::cout << "Level number: " << levelNumber << "\n";
@@ -30,6 +31,7 @@ int main() {
 
 
 		while (window.isOpen() && !level.isComplete(breakPlatformsInLevel)) {
+			background.textColorShifter();
 
 			Event event;
 			while (window.pollEvent(event)) {
@@ -44,10 +46,8 @@ int main() {
 				}
 			}
 
-			if (player.isOutside() || restartState) {
-				if (player.isOutside())
-					deathPrompt(window);
-
+			// If the player pressed R
+			if (restartState) {
 				restartState = false;
 				levelNumber--;
 				break;
@@ -56,10 +56,15 @@ int main() {
 			game.update(player);
 			game.collision(player, platformsInLevel);
 			game.collision(player, breakPlatformsInLevel);
-			game.draw(window, player, platformsInLevel, breakPlatformsInLevel);
+			game.draw(window, player, platformsInLevel, breakPlatformsInLevel, background.getColor());
+
+			// If the player falls off the map they die
+			if (player.isOutside())
+				deathPrompt(window);
 
 
 		}
+		// Transition between next level or restart
 		fade(window, levelNumber);
 	}
 	return 0;

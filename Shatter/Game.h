@@ -11,7 +11,7 @@ public:
 	void update(Player& player);
 
 	// Draws the player, platforms and breakplatforms onto the screen
-	void draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms);
+	void draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms, Color c);
 
 	// Detects the collision between the player and platforms
 	void collision(Player& player, std::vector<Platform>& platform);
