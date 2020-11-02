@@ -54,3 +54,15 @@ void Prompt::blink() {
 	alpha += colorIncrementer*5;
 	textObj.setFillColor(Color(fontR, fontG, fontB, alpha));
 }
+
+void Prompt::setString(string words) {
+	textString = words;
+	textObj.setString(words);
+}
+
+void Prompt::setPosition(float xPos, float yPos) {
+	xPosition = xPos;
+	yPosition = yPos;
+	textObj.setOrigin(textObj.getLocalBounds().width / 2, textObj.getLocalBounds().height / 2);
+	textObj.setPosition(xPos, yPos);
+}

@@ -29,5 +29,7 @@ public:
 	void blink();
 	sf::Color getColor();
 	void setColor(sf::Color c);
+	void setString(string words);
+	void setPosition(float xPos, float yPos);
 };
 

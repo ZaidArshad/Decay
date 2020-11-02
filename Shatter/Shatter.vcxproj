@@ -24,6 +24,7 @@
     <ProjectGuid>{161548ba-6961-41db-a4bb-a5151b7833a7}</ProjectGuid>
     <RootNamespace>Shatter</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>DECAY</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -153,7 +154,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Processes.cpp" />
     <ClCompile Include="Prompt.cpp" />
-    <ClCompile Include="Shatter.cpp" />
+    <ClCompile Include="Decay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BreakPlatform.h" />

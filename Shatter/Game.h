@@ -2,6 +2,7 @@
 #include"Player.h"
 #include"Platform.h"
 #include "BreakPlatform.h"
+#include "Prompt.h"
 
 
 class Game
@@ -11,7 +12,7 @@ public:
 	void update(Player& player);
 
 	// Draws the player, platforms and breakplatforms onto the screen
-	void draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms, Color c);
+	void draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms, Color c, Prompt &currentScore);
 
 	// Detects the collision between the player and platforms
 	void collision(Player& player, std::vector<Platform>& platform);

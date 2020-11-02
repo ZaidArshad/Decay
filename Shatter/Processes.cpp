@@ -13,7 +13,7 @@ Font loadFont(std::string fontFileName) {
 void titleScreen(RenderWindow& window) {
 	Event event;
 	bool isStarted = false;
-	Prompt title(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y-50, "bulkypix.ttf", 100, "Shatter", sf::Color::White);
+	Prompt title(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y-50, "bulkypix.ttf", 100, "DECAY", sf::Color::White);
 	Prompt pressSpace(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y+50, "ka1.ttf", 30, "Press space to start", sf::Color::White);
 
 	while (window.isOpen() && !isStarted) {
@@ -42,10 +42,13 @@ void pauseScreen(RenderWindow& window, bool &restartState) {
 	Button resumeButton(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y-120, "Resume", "bulkypix.ttf");
 	Button restartButton(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y, "Restart", "bulkypix.ttf");
 	Button quitButton(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y+120, "Quit", "bulkypix.ttf");
-	Prompt backgroundColor(0, 0, "ka1.ttf" ,30 , " ", Color::White);
+	Prompt backgroundColor(0, 0, "ka1.ttf" ,30 , " ", Color::Black);
+	int blue = 0;
+	Color bgColor(0, 0, blue);
 
 	while (window.isOpen() && isPaused) {
 		isPaused = !resumeButton.mouseInteract(window);
+
 
 		if (restartButton.mouseInteract(window)) {
 			isPaused = false;
@@ -58,8 +61,17 @@ void pauseScreen(RenderWindow& window, bool &restartState) {
 			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
 				isPaused = false;
 		}
-		backgroundColor.textColorShifter();
-		window.clear(backgroundColor.getColor());
+
+		if (blue < 255) {
+			blue++;
+			bgColor.b = blue;
+			window.clear(bgColor);
+		}
+		else {
+			backgroundColor.textColorShifter();
+			window.clear(backgroundColor.getColor());
+		}
+
 		resumeButton.draw(window);
 		restartButton.draw(window);
 		quitButton.draw(window);
@@ -67,17 +79,20 @@ void pauseScreen(RenderWindow& window, bool &restartState) {
 	}
 }
 
-void fade(RenderWindow& window, int level) {
+void fade(RenderWindow& window, int level, int score) {
 
 	RectangleShape screenOverlay(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
 	screenOverlay.setPosition(0, 0);
-	Prompt levelPrompt(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y, "bulkypix.ttf", 100, "Level " + std::to_string(level+1) , Color::White);
+	Prompt levelPrompt(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y-50, "bulkypix.ttf", 100, "Level " + std::to_string(level + 1), Color::White);
+	Prompt scorePrompt(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y+50, "ka1.ttf", 30, "Total Score  " + std::to_string(score), Color::White);
 
 	for (int alpha = 0; alpha <= 255; alpha += 8) {
 		screenOverlay.setFillColor(Color(0, 0, 0, alpha));
 		levelPrompt.setColor(Color(255, 255, 255, alpha));
+		scorePrompt.setColor(Color(255, 255, 255, alpha));
 		window.draw(screenOverlay);
 		window.draw(levelPrompt.getText());
+		window.draw(scorePrompt.getText());
 		window.display();
 	}
 }

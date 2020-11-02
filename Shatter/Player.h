@@ -7,24 +7,35 @@ using namespace sf;
 
 class Player
 {
+	// General Attributes
 	float scale;
 	float xPos;
 	float yPos;
+
+	// Velocity
 	int xSpeed;
 	int ySpeed;
+
+	// Visual Attributes
 	Texture playerTexture;
 	Texture canSpriteSheet;
 	Sprite playerSprite;
+
+	// Jumping Attributes
 	bool canJump;
 	float jumpHeight;
+	bool wHeld;
 	int platformId;
+
+	// Animation Attributes
 	int rollingSpriteId;
 	int frame;
-	bool wHeld;
-	bool topStatus;
 
 public:
+	//------Constructors------//
 	Player(float x, float y, float s);
+
+	//------Setters------//
 	void setScale(float s);
 	void setXPos(float x);
 	void setYPos(float  y);
@@ -36,8 +47,8 @@ public:
 	void setPlatformId(int id);
 	void setSprite(Sprite sprite);
 	void setWHeld(bool state);
-	void setTop(bool top);
 
+	//------Getters------//
 	float  getScale();
 	float  getXPos();
 	float  getYPos();
@@ -50,8 +61,8 @@ public:
 	bool isOutside();
 	bool getWHeld();
 	int getPlatformId();
-	bool getTop();
 
+	//------Other------//
 	void move(float x, float y);
 	void animateRolling(String direction);
 };

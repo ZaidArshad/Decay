@@ -43,7 +43,7 @@ void Game::update(Player& player) {
 	//std::cout << "Update: " << player.getYPos() << "\n";
 }
 
-void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms, Color c) {
+void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms, Color c, Prompt &currentScore) {
 	// Clearing Window
 	window.clear(c);
 
@@ -54,6 +54,10 @@ void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& pla
 	for (size_t i = 0; i < breakPlatforms.size(); i++) {
 		window.draw(breakPlatforms[i].getShape());
 	}
+
+	// Draws the score
+	currentScore.textColorShifter();
+	window.draw(currentScore.getText());
 
 	// Drawing player
 	window.draw(player.getSprite());

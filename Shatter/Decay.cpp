@@ -14,15 +14,25 @@
 using namespace sf;
 
 int main() {
-	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Shatter");
+	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "DECAY", sf::Style::Titlebar | sf::Style::Close);
 	bool restartState = false;
 	window.setFramerateLimit(60);
 	Game game;
 	titleScreen(window);
-	fade(window, 0);
-	Prompt background(0, 0, "bulkypix.ttf", 0, "", Color::White);
+	fade(window, 0, 0);
+	int frame = 0;
+
+	// Score handeling
+	int currentScore = 99;
+	int totalScore = 0;
+	Prompt currentScorePrompt(750, 50, "ka1.ttf", 30, "Score: " + currentScore, Color::White);
+
 
 	for (int levelNumber = 1; levelNumber < 10; levelNumber++) {
+
+		if (!window.isOpen())
+			break;
+
 		std::cout << "Level number: " << levelNumber << "\n";
 		Player player(startPositions[levelNumber-1].x, startPositions[levelNumber-1].y, 1);
 		Level level(levelNumber);
@@ -31,7 +41,11 @@ int main() {
 
 
 		while (window.isOpen() && !level.isComplete(breakPlatformsInLevel)) {
-			background.textColorShifter();
+
+			frame++;
+
+			// Updates the score
+			currentScorePrompt.setString("Score: " + to_string(currentScore));
 
 			Event event;
 			while (window.pollEvent(event)) {
@@ -56,16 +70,30 @@ int main() {
 			game.update(player);
 			game.collision(player, platformsInLevel);
 			game.collision(player, breakPlatformsInLevel);
-			game.draw(window, player, platformsInLevel, breakPlatformsInLevel, background.getColor());
+			game.draw(window, player, platformsInLevel, breakPlatformsInLevel, Color::Black, currentScorePrompt);
 
 			// If the player falls off the map they die
 			if (player.isOutside())
 				deathPrompt(window);
 
-
+			// Decreases the score
+			if (frame % 60 == 0) {
+				frame = 0;
+				if (currentScore > 0)
+					currentScore--;
+			}
 		}
+		
+		// If the user completes the level
+		if (level.isComplete(breakPlatformsInLevel)) {
+			totalScore += currentScore;
+			currentScore = 99;
+		}
+		else if (currentScore > 11)
+			currentScore -= 10;
+
 		// Transition between next level or restart
-		fade(window, levelNumber);
+		fade(window, levelNumber, totalScore);
 	}
 	return 0;
 };

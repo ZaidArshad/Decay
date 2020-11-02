@@ -1,6 +1,7 @@
 #pragma once
 #include"SFML\System.hpp"
 #include"SFML\Graphics.hpp"
+#include "Prompt.h"
 #include <iostream>
 
 using namespace sf;
@@ -37,5 +38,5 @@ Font loadFont(std::string fontFileName);
 void titleScreen(RenderWindow &window);
 Color colorShifter(Color currentColor);
 void pauseScreen(RenderWindow &window, bool &restartState);
-void fade(RenderWindow& window, int level);
+void fade(RenderWindow& window, int level, int score);
 void deathPrompt(RenderWindow& window);
