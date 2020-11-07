@@ -22,13 +22,8 @@ int main() {
 	fade(window, 0, 0);
 	int frame = 0;
 
-	// Score handeling
-	int currentScore = 99;
-	int totalScore = 0;
-	Prompt currentScorePrompt(750, 50, "ka1.ttf", 30, "Score: " + currentScore, Color::White);
 
-
-	for (int levelNumber = 1; levelNumber < 10; levelNumber++) {
+	for (int levelNumber = 10; levelNumber < 11; levelNumber++) {
 
 		if (!window.isOpen())
 			break;
@@ -43,9 +38,6 @@ int main() {
 		while (window.isOpen() && !level.isComplete(breakPlatformsInLevel)) {
 
 			frame++;
-
-			// Updates the score
-			currentScorePrompt.setString("Score: " + to_string(currentScore));
 
 			Event event;
 			while (window.pollEvent(event)) {
@@ -70,7 +62,7 @@ int main() {
 			game.update(player);
 			game.collision(player, platformsInLevel);
 			game.collision(player, breakPlatformsInLevel);
-			game.draw(window, player, platformsInLevel, breakPlatformsInLevel, Color::Black, currentScorePrompt);
+			game.draw(window, player, platformsInLevel, breakPlatformsInLevel, Color::Black);
 
 			// If the player falls off the map they die
 			if (player.isOutside())
@@ -79,21 +71,21 @@ int main() {
 			// Decreases the score
 			if (frame % 60 == 0) {
 				frame = 0;
-				if (currentScore > 0)
-					currentScore--;
+				if (game.getLevelScore() > 0)
+					game.setLevelScore(game.getLevelScore()-1);
 			}
 		}
 		
 		// If the user completes the level
 		if (level.isComplete(breakPlatformsInLevel)) {
-			totalScore += currentScore;
-			currentScore = 99;
+			game.addToTotalScore();
+			game.setLevelScore(99);
 		}
-		else if (currentScore > 11)
-			currentScore -= 10;
+		else if (game.getLevelScore() > 11)
+			game.setLevelScore(game.getLevelScore() - 10);
 
 		// Transition between next level or restart
-		fade(window, levelNumber, totalScore);
+		fade(window, levelNumber, game.getTotalScore());
 	}
 	return 0;
 };

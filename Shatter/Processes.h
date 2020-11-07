@@ -31,7 +31,7 @@ const Vector2f startPositions[10] = {
 	// Level 9
 	Vector2f(420, 390),
 	// Level 10
-	Vector2f(0,0),
+	Vector2f(100, 50)
 };
 
 Font loadFont(std::string fontFileName);

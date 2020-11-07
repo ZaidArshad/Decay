@@ -182,6 +182,27 @@ Level::Level(int l) {
 		breakPlatformsInLevel.push_back(breaker14);
 		break;
 	}
+	// Case 7
+	case 10: {
+		BreakPlatform breaker1(4, 100, 20, 100, 200);
+		breakPlatformsInLevel.push_back(breaker1);
+		BreakPlatform breaker2(3, 100, 20, 200, 350);
+		breakPlatformsInLevel.push_back(breaker2);
+		BreakPlatform breaker3(3, 100, 20, 300, 500);
+		breakPlatformsInLevel.push_back(breaker3);
+		BreakPlatform breaker4(2, 100, 20, 500, 700);
+		breakPlatformsInLevel.push_back(breaker4);
+
+		BreakPlatform breaker5(2, 100, 20, 400, 650);
+		breakPlatformsInLevel.push_back(breaker5);
+		BreakPlatform breaker6(2, 100, 20, 300, 400);
+		breakPlatformsInLevel.push_back(breaker6);
+		BreakPlatform breaker7(2, 100, 20, 200, 250);
+		breakPlatformsInLevel.push_back(breaker7);
+		//BreakPlatform breaker8(2, 100, 20, 500, 700);
+		//breakPlatformsInLevel.push_back(breaker8);
+		break;
+	}
 
 
 	default: {

@@ -38,12 +38,9 @@ void Game::update(Player& player) {
 	// Changing the player's position by it's move speed
 	player.move((float) player.getXSpeed(), (float) player.getYSpeed());
 	player.setXSpeed(0);
-
-	//Test
-	//std::cout << "Update: " << player.getYPos() << "\n";
 }
 
-void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms, Color c, Prompt &currentScore) {
+void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms, Color c) {
 	// Clearing Window
 	window.clear(c);
 
@@ -56,8 +53,8 @@ void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& pla
 	}
 
 	// Draws the score
-	currentScore.textColorShifter();
-	window.draw(currentScore.getText());
+	currentScorePrompt.textColorShifter();
+	window.draw(currentScorePrompt.getText());
 
 	// Drawing player
 	window.draw(player.getSprite());
@@ -175,3 +172,15 @@ void Game::collision(Player& player, std::vector<BreakPlatform>& breakPlatforms)
 
 	}
 }
+
+// Setting score attributes
+void Game::addToTotalScore() { totalScore += levelScore;  }
+void Game::setLevelScore(int lScore) { 
+	levelScore = lScore;
+	currentScorePrompt.setString("Score: " + to_string(levelScore));
+}
+
+// Getting score attributes
+int Game::getTotalScore() { return totalScore; }
+int Game::getLevelScore() { return levelScore; }
+Prompt Game::getPromptScore() { return currentScorePrompt;  }
