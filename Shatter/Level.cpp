@@ -204,38 +204,48 @@ Level::Level(int l) {
 		break;
 	}
 
-
+	// In case a level doesn't pass through properly
 	default: {
 		Platform platform(100, 25, 400, 300);
 		break; 
 	}
 	}
 
-	//Setting ids for each platform
+	//Setting ids for each platform to give them a unique identifier
 	int id;
+
+	// Setting ids for the breakable platforms
 	for (int i = 0; i < breakPlatformsInLevel.size(); i++) {
 		id = i + 1;
 		breakPlatformsInLevel[i].setPlatformId(id);
 	}
+	// Setting ids for non breakable platforms
 	for (int i = 0; i < platformsInLevel.size(); i++) {
 		id = (i*-1) -1;
 		platformsInLevel[i].setPlatformId(id);
 	}
 }
 
+// Gets the vectors of the platforms from the level
 std::vector<Platform> Level::getPlatforms() { return platformsInLevel;  }
 std::vector<BreakPlatform> Level::getBreakPlatforms() { return breakPlatformsInLevel; }
 
-
+// Checks if the level is complete
 bool Level::isComplete(std::vector<BreakPlatform> &breakPlatforms) {
+
+	// Keeps track of how many platforms are in the level
 	int platformsAlive = breakPlatforms.size();
+
+	// Iterates through the platforms to check the health
 	for (int i = 0; i < breakPlatforms.size(); i++) {
+
+		// If the platform is *dead* reduce the count
 		if (breakPlatforms[i].getHealth() == 0) {
 			platformsAlive--;
 		}
 	}
+	// If there are not platforms on the level
 	if (platformsAlive == 0) {
-		std::cout << "you winnnn\n";
 		return true;
 	}
 	else {

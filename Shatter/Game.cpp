@@ -4,40 +4,46 @@
 
 void Game::update(Player& player) {
 
-	// Keybinds
-	if (Keyboard::isKeyPressed(Keyboard::D)) {
+	// KEYBINDS //
+
+	// D pressed -> Rolling right
+	if (Keyboard::isKeyPressed(Keyboard::D)) { 
 		player.setXSpeed(10);
 		player.animateRolling("right");
 	}
+	// A pressed -> Rolling left
 	else if (Keyboard::isKeyPressed(Keyboard::A)) {
 		player.setXSpeed(-10);
 		player.animateRolling("left");
 	}
+	// Nothing pressed -> Staying still
 	else {
 		player.animateRolling("still");
 	}
-
+	// First W press -> Jumping 
 	if (Keyboard::isKeyPressed(Keyboard::W) && player.getJump() && !player.getWHeld()) {
-		player.setWHeld(true);
-		player.setJump(false);
+		player.setWHeld(true); // Keeps track if the playing is holding w
+		player.setJump(false); // Keeps track if the user has jumped of a platform
 		player.setYSpeed(-10);
 		player.setJumpHeight();
 	}
 
 
-	// Gravity
+	// GRAVITY //
 	if (!player.getJump() && player.getYPos() <= player.getJumpHeight()) //if in the air & have reached peak jump height
 		player.setYSpeed(10);
 
+	// When the player is not jumping, fall
 	else if (player.getJump())
 		player.setYSpeed(10);
 
+	// When the player is falling
 	if (player.getYSpeed() == 10)
-		player.setJump(false);
+		player.setJump(false); // Keep track that the player is not jumping
 
 	// Changing the player's position by it's move speed
 	player.move((float) player.getXSpeed(), (float) player.getYSpeed());
-	player.setXSpeed(0);
+	player.setXSpeed(0); // Resets the speed afters it's moved
 }
 
 void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& platforms, std::vector<BreakPlatform>& breakPlatforms, Color c) {

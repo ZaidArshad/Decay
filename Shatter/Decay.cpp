@@ -23,7 +23,7 @@ int main() {
 	int frame = 0;
 
 
-	for (int levelNumber = 10; levelNumber < 11; levelNumber++) {
+	for (int levelNumber = 1; levelNumber < 11; levelNumber++) {
 
 		if (!window.isOpen())
 			break;
@@ -38,6 +38,8 @@ int main() {
 		while (window.isOpen() && !level.isComplete(breakPlatformsInLevel)) {
 
 			frame++;
+			auto start = std::chrono::system_clock::now();
+
 
 			Event event;
 			while (window.pollEvent(event)) {
@@ -70,10 +72,14 @@ int main() {
 
 			// Decreases the score
 			if (frame % 60 == 0) {
+				auto end = std::chrono::system_clock::now();
+				std::chrono::duration<double> elapsed_seconds = end - start;
+				std::cout <<  frame/elapsed_seconds.count()/60 << " FPS\n";
 				frame = 0;
 				if (game.getLevelScore() > 0)
 					game.setLevelScore(game.getLevelScore()-1);
 			}
+			
 		}
 		
 		// If the user completes the level

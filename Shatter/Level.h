@@ -5,8 +5,10 @@
 #include "Processes.h"
 
 class Level
-{
+{	// Level stays the same, only changes when a new level object is created
 	int level;
+
+	// List of platforms in the level
 	std::vector<Platform> platformsInLevel;
 	std::vector<BreakPlatform> breakPlatformsInLevel;
 

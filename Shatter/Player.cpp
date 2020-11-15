@@ -5,26 +5,31 @@
 
 using namespace sf;
 
+// Regular constructor
 Player::Player(float x, float y, float s) {
 	scale = s;
 	xPos = x;
 	yPos = y;
 	xSpeed = 0;
 	ySpeed = 10;
-	canJump = false;
-	jumpHeight = 0;
-	platformId = 0;
-	rollingSpriteId = 0;
-	frame = 0;
-	wHeld = false;
+	canJump = false; // Keeps track if the player can jump
+	platformId = 0; // Keeps track of the platform the player last touched
+	rollingSpriteId = 0; // Keeps track of the sprie it is on
+	frame = 0; // Keeps track of the frame the sprite
+	wHeld = false; // If the user is holding down the W key
 
+	// Loads the sprite sheet of the can
 	if (!playerTexture.loadFromFile("images/can.png")) {
 		std::cout << "Load failed\n";
 		system("pause");
 	}
+
+	// Sets the sprite to the player
 	playerSprite.setTexture(playerTexture);
 	playerSprite.setPosition(xPos, yPos);
 }
+
+//------Setters------//
 void Player::setScale(float s) {
 	scale = s;
 	playerSprite.setScale(scale, 1);
@@ -38,16 +43,15 @@ void Player::setYPos(float  y) {
 	playerSprite.setPosition(xPos, yPos);
 }
 void Player::setSprite(Sprite sprite) { playerSprite = sprite; }
-
 void Player::setTexture(Texture &texture) {playerSprite.setTexture(texture);}
 void Player::setXSpeed(int xVel) { xSpeed = xVel; }
 void Player::setYSpeed(int yVel) { ySpeed = yVel; }
 void Player::setJump(bool jumped) { canJump = jumped; }
 void Player::setJumpHeight() { jumpHeight = yPos - 150; }
 void Player::setPlatformId(int id) { platformId = id; }
-
 void Player::setWHeld(bool state) { wHeld = state; }
 
+//------Getters------//
 float Player::getXPos() { return xPos; }
 float Player::getYPos() { return yPos; }
 float Player::getScale() { return scale; }
@@ -59,31 +63,38 @@ bool Player::getJump() { return canJump; }
 float Player::getJumpHeight() { return jumpHeight; }
 int Player::getPlatformId() { return platformId; }
 
+// Moves the player
 void Player::move(float x, float y) {
 	playerSprite.move(x, y);
 	xPos += x;
 	yPos += y;
 }
 
+// If the player is bellow the screen
 bool Player::isOutside() {
 	if (yPos > SCREEN_HEIGHT) { return true; }
 	else { return false;  }
 }
 
+// Gets the status of the w key being held
 bool Player::getWHeld() { return wHeld; }
 
+// Animates the sprite of the player
 void Player::animateRolling(String direction) {
-	bool isRolling = true;
+
+	bool isRolling = true; // Keeps track of the of the state of the can
 	frame += 1;
 
 	// Can only change sprite every 4 frames or more
 	if (frame > 4) {
 
+		// Loads the sprie sprite sheet
 		if (!canSpriteSheet.loadFromFile("images/canRollingSpriteSheet.png")) {
 			std::cout << "Load failed\n";
 			system("pause");
 		}
 
+		// If the player is moving left
 		if (direction == "left") {
 			rollingSpriteId--;
 
@@ -92,6 +103,7 @@ void Player::animateRolling(String direction) {
 				rollingSpriteId = 3;
 		}
 
+		// If the player is moving right
 		else if (direction == "right") {
 			rollingSpriteId++;
 			if (rollingSpriteId > 3)
