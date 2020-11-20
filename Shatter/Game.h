@@ -10,6 +10,9 @@ class Game
 	int totalScore = 0;
 	int levelScore = 99;
 	Prompt currentScorePrompt = Prompt(825, 50, "ka1.ttf", 40, "Score: 99", Color::White);
+	float joyX;
+	float joyJump;
+	int baseSpeed = 10;
 
 public:
 	// Updates player position and controls gravity

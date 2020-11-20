@@ -4,16 +4,22 @@
 
 void Game::update(Player& player) {
 
-	// KEYBINDS //
+	// JOYSTICK //
+	if (Joystick::isConnected(0)) {
+		joyX = Joystick::getAxisPosition(0, Joystick::X) / 10;
+		joyJump = Joystick::isButtonPressed(0, 0); // A button xbox
+		baseSpeed = abs(joyX);
+	}
 
+	// KEYBINDS //
 	// D pressed -> Rolling right
-	if (Keyboard::isKeyPressed(Keyboard::D)) { 
-		player.setXSpeed(10);
+	if (Keyboard::isKeyPressed(Keyboard::D)|| Keyboard::isKeyPressed(Keyboard::Right) || joyX > 2) {
+		player.setXSpeed(baseSpeed);
 		player.animateRolling("right");
 	}
 	// A pressed -> Rolling left
-	else if (Keyboard::isKeyPressed(Keyboard::A)) {
-		player.setXSpeed(-10);
+	else if (Keyboard::isKeyPressed(Keyboard::A)|| Keyboard::isKeyPressed(Keyboard::Left) || joyX < - 2) {
+		player.setXSpeed(-baseSpeed);
 		player.animateRolling("left");
 	}
 	// Nothing pressed -> Staying still
@@ -21,7 +27,7 @@ void Game::update(Player& player) {
 		player.animateRolling("still");
 	}
 	// First W press -> Jumping 
-	if (Keyboard::isKeyPressed(Keyboard::W) && player.getJump() && !player.getWHeld()) {
+	if ((Keyboard::isKeyPressed(Keyboard::W) || Keyboard::isKeyPressed(Keyboard::Up) || joyJump) && player.getJump() && !player.getWHeld()) {
 		player.setWHeld(true); // Keeps track if the playing is holding w
 		player.setJump(false); // Keeps track if the user has jumped of a platform
 		player.setYSpeed(-10);

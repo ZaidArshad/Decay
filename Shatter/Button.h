@@ -39,5 +39,8 @@ public:
 
 	// Allows the mouse to interact with the button (highlights and when clicked return true)
 	bool mouseInteract(RenderWindow& window);
+
+	// Sets the opacity of the button
+	void setAlpha(int opacity);
 };
 

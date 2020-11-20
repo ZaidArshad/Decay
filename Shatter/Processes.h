@@ -40,3 +40,4 @@ Color colorShifter(Color currentColor);
 void pauseScreen(RenderWindow &window, bool &restartState);
 void fade(RenderWindow& window, int level, int score);
 void deathPrompt(RenderWindow& window);
+void gameOverScreen(RenderWindow& window, int score);

@@ -23,7 +23,7 @@ void titleScreen(RenderWindow& window) {
 	Event event; // Keep track of any input
 	bool isStarted = false; // Keeps track if the user has chosen an input to start the game
 	Prompt title(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y-50, "bulkypix.ttf", 100, "DECAY", sf::Color::White);
-	Prompt pressSpace(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y+50, "ka1.ttf", 30, "Press space to start", sf::Color::White);
+	Prompt pressSpace(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y+50, "ka1.ttf", 30, "Press start", sf::Color::White);
 
 	// While the user has not chosen an option
 	while (window.isOpen() && !isStarted) {
@@ -34,7 +34,7 @@ void titleScreen(RenderWindow& window) {
 			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
 				window.close();
 			// Enable the game to be started when space is pressed
-			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Space)
+			if ((event.type == Event::KeyPressed && event.key.code == Keyboard::Space) || (Joystick::isButtonPressed(0, 7)))
 				isStarted = true;
 		}
 		window.clear(Color::Black);
@@ -57,6 +57,12 @@ void titleScreen(RenderWindow& window) {
 // Returns: nothing
 void pauseScreen(RenderWindow& window, bool &restartState) {
 	bool isPaused = true; // Keeps track if the player chooses to resume the game
+
+	bool canPressStart = false; // Checks if the user's controller can press start
+	int yPos; // Position of the user's controller left stick y axis
+	int option = -1; // Option for the menu of the controller
+	bool canSelect = true;
+
 	Event event; // Keeps track of any inputs
 
 	// The buttons on the pause screen
@@ -69,7 +75,6 @@ void pauseScreen(RenderWindow& window, bool &restartState) {
 	int blue = 0; // Used for a smooth transition in background color
 	Color bgColor(0, 0, blue);
 
-	// While the user has not chosen and option
 	while (window.isOpen() && isPaused) {
 		isPaused = !resumeButton.mouseInteract(window); // If the user clicks the resume button
 
@@ -79,12 +84,47 @@ void pauseScreen(RenderWindow& window, bool &restartState) {
 			restartState = true; // Inform the main loop to restart the level
 		}
 
+		// Controls the menu with the controller
+		if (Joystick::isConnected(0)) {
+			yPos = Joystick::getAxisPosition(0, Joystick::Y);
+
+			// Selecting options
+			if (yPos < -20 && option > -1 && canSelect) {
+				option--;
+				Mouse::setPosition(Vector2i(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y + 120 * option), window);
+				canSelect = false;
+			}
+			else if (yPos > 20 && option < 1 && canSelect) {
+				option++;
+				Mouse::setPosition(Vector2i(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y + 120 * option), window);
+				canSelect = false;
+			}
+			else if (yPos < 20 && yPos > -20)
+				canSelect = true;
+
+			// Pressing A on the options
+			if (Joystick::isButtonPressed(0, 0)) {
+				if (option == -1)
+					isPaused = false;
+				else if (option == 0) {
+					isPaused = false;
+					restartState = true; // Inform the main loop to restart the level
+				}
+				else if (option == 1)
+					window.close();
+			}
+		}
+
+
+
 		// Closes the game if escape or the quit button are pressed
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed || quitButton.mouseInteract(window))
 				window.close();
-			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
+			if ((event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) || (Joystick::isButtonPressed(0, 7) && canPressStart))
 				isPaused = false;
+			if (event.type == Event::JoystickButtonReleased && event.joystickButton.button != Joystick::isButtonPressed(0, 7))
+				canPressStart = true;
 		}
 
 		// Transition from black to blue background
@@ -157,5 +197,71 @@ void deathPrompt(RenderWindow& window) {
 			isDead = false;
 		else if (Keyboard::isKeyPressed(Keyboard::Escape))
 			window.close();
+	}
+}
+
+// When the user completes the game
+// window: Window that is openned in the beginning of the game
+// score: Integer value of the players score
+// Returns: nothing
+void gameOverScreen(RenderWindow& window, int score) {
+	bool isPaused = true; // Keeps track if the player chooses to resume the game
+	Event event; // Keeps track of any inputs
+
+	RectangleShape screenOverlay(Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT)); // Block that fades onto the screen
+
+	// Text on the screen
+	Prompt gameOverPrompt(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y - 50, "bulkypix.ttf", 100, "GAME OVER", Color::White);
+	Prompt scorePrompt(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y + 50, "ka1.ttf", 30, "Total Score  " + std::to_string(score), Color::White);
+
+	// The buttons on the pause screen
+	Button quitButton(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y + 200, "Quit", "bulkypix.ttf");
+
+	// Prompt object only used for it's textColorShifter() function
+	Prompt backgroundColor(0, 0, "ka1.ttf", 30, " ", Color::Black);
+	int blue = 0; // Used for a smooth transition in background color
+	Color bgColor(0, 0, blue);
+
+	// Fades into black
+	for (int alpha = 0; alpha <= 255; alpha += 8) {
+		screenOverlay.setFillColor(Color(0, 0, 0, alpha));
+		gameOverPrompt.setColor(Color(255, 255, 255, alpha));
+		scorePrompt.setColor(Color(255, 255, 255, alpha));
+		quitButton.setAlpha(alpha);
+
+		// Draws the text and block
+		window.draw(screenOverlay);
+		quitButton.draw(window);
+		window.draw(gameOverPrompt.getText());
+		window.draw(scorePrompt.getText());
+		window.display();
+	}
+
+	// While the user has not chosen and option
+	while (window.isOpen() && isPaused) {
+
+		// Closes the game if escape or the quit button are pressed
+		while (window.pollEvent(event)) {
+			if (event.type == Event::Closed || quitButton.mouseInteract(window))
+				window.close();
+
+			// Transitions from black to blue
+			if (blue < 255) {
+				blue++;
+				bgColor.b = blue;
+				window.clear(bgColor);
+			}
+			// Transisiton between different colour background
+			else {
+				backgroundColor.textColorShifter();
+				window.clear(backgroundColor.getColor());
+			}
+
+			// Draws the button
+			quitButton.draw(window);
+			window.draw(gameOverPrompt.getText());
+			window.draw(scorePrompt.getText());
+			window.display();
+		}
 	}
 }

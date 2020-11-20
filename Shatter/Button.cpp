@@ -106,3 +106,10 @@ bool Button::mouseInteract(RenderWindow &window) {
 		return false;
 	}
 }
+
+// Sets the opacity of the button
+void Button::setAlpha(int opacity) {
+	border.setFillColor(Color(border.getFillColor().r, border.getFillColor().g, border.getFillColor().b, opacity));
+	inside.setFillColor(Color(inside.getFillColor().r, inside.getFillColor().g, inside.getFillColor().b, opacity));
+	text.setFillColor(Color(text.getFillColor().r, text.getFillColor().g, text.getFillColor().b, opacity));
+}

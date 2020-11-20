@@ -45,11 +45,11 @@ int main() {
 			while (window.pollEvent(event)) {
 				if (event.type == Event::Closed)
 					window.close();
-				if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
+				if ((event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) || (Joystick::isButtonPressed(0, 7)))
 					pauseScreen(window, restartState);
-				if (event.type == Event::KeyReleased && event.key.code == Keyboard::W)
+				if ((event.type == Event::KeyReleased && (event.key.code == Keyboard::W || event.key.code == Keyboard::Up)) ||event.type == Event::JoystickButtonReleased && event.joystickButton.button == Joystick::isButtonPressed(0,0))
 					player.setWHeld(false);
-				if (event.type == Event::KeyPressed && event.key.code == Keyboard::R) {
+				if ((event.type == Event::KeyPressed && event.key.code == Keyboard::R) || (Joystick::isButtonPressed(0, 5))) {
 					restartState = true;
 				}
 			}
@@ -91,7 +91,11 @@ int main() {
 			game.setLevelScore(game.getLevelScore() - 10);
 
 		// Transition between next level or restart
-		fade(window, levelNumber, game.getTotalScore());
+		if (levelNumber < 10) {
+			fade(window, levelNumber, game.getTotalScore());
+		}
+
 	}
+	gameOverScreen(window, game.getTotalScore());
 	return 0;
 };
