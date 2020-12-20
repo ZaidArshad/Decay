@@ -11,7 +11,7 @@ class Game
 	int levelScore = 99;
 	Prompt currentScorePrompt = Prompt(825, 50, "ka1.ttf", 40, "Score: 99", Color::White);
 	float joyX;
-	float joyJump;
+	float joyJump = false;
 	int baseSpeed = 10;
 
 public:

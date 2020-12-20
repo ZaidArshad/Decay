@@ -14,13 +14,18 @@
 using namespace sf;
 
 int main() {
-	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "DECAY", sf::Style::Titlebar | sf::Style::Close);
+	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "DECAY", sf::Style::Default | sf::Style::Close);
+
+
 	bool restartState = false;
 	window.setFramerateLimit(60);
 	Game game;
 	titleScreen(window);
 	fade(window, 0, 0);
 	int frame = 0;
+	bool canPause = false;
+	auto start = std::chrono::system_clock::now();
+
 
 
 	for (int levelNumber = 1; levelNumber < 11; levelNumber++) {
@@ -36,17 +41,21 @@ int main() {
 
 
 		while (window.isOpen() && !level.isComplete(breakPlatformsInLevel)) {
-
+			
+			if (frame == 1)
+				start = std::chrono::system_clock::now();
 			frame++;
-			auto start = std::chrono::system_clock::now();
-
 
 			Event event;
 			while (window.pollEvent(event)) {
 				if (event.type == Event::Closed)
 					window.close();
-				if ((event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) || (Joystick::isButtonPressed(0, 7)))
+				if (event.type == Event::JoystickButtonReleased && event.joystickButton.button != Joystick::isButtonPressed(0, 7))
+					canPause = true;
+				if ((event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) || ((Joystick::isButtonPressed(0, 7) && canPause))) {
 					pauseScreen(window, restartState);
+					canPause = false;
+				}
 				if ((event.type == Event::KeyReleased && (event.key.code == Keyboard::W || event.key.code == Keyboard::Up)) ||event.type == Event::JoystickButtonReleased && event.joystickButton.button == Joystick::isButtonPressed(0,0))
 					player.setWHeld(false);
 				if ((event.type == Event::KeyPressed && event.key.code == Keyboard::R) || (Joystick::isButtonPressed(0, 5))) {
@@ -74,7 +83,7 @@ int main() {
 			if (frame % 60 == 0) {
 				auto end = std::chrono::system_clock::now();
 				std::chrono::duration<double> elapsed_seconds = end - start;
-				std::cout <<  frame/elapsed_seconds.count()/60 << " FPS\n";
+				std::cout <<  frame/elapsed_seconds.count() << " FPS\n";
 				frame = 0;
 				if (game.getLevelScore() > 0)
 					game.setLevelScore(game.getLevelScore()-1);

@@ -6,7 +6,7 @@ void Game::update(Player& player) {
 
 	// JOYSTICK //
 	if (Joystick::isConnected(0)) {
-		joyX = Joystick::getAxisPosition(0, Joystick::X) / 10;
+		joyX = Joystick::getAxisPosition(0, Joystick::X) / 9.5;
 		joyJump = Joystick::isButtonPressed(0, 0); // A button xbox
 		baseSpeed = abs(joyX);
 	}

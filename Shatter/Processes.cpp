@@ -22,8 +22,18 @@ Font loadFont(std::string fontFileName) {
 void titleScreen(RenderWindow& window) {
 	Event event; // Keep track of any input
 	bool isStarted = false; // Keeps track if the user has chosen an input to start the game
+	String playGameStr = "Press Space to play";
+
+	if (Joystick::isConnected(0))
+		playGameStr = "Press Start to play";
+
 	Prompt title(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y-50, "bulkypix.ttf", 100, "DECAY", sf::Color::White);
-	Prompt pressSpace(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y+50, "ka1.ttf", 30, "Press start", sf::Color::White);
+	Prompt pressSpace(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y+50, "ka1.ttf", 30, playGameStr, sf::Color::White);
+
+	// Sets the icon
+	Image icon;
+	icon.loadFromFile("images/can.png");
+	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
 	// While the user has not chosen an option
 	while (window.isOpen() && !isStarted) {
@@ -57,13 +67,14 @@ void titleScreen(RenderWindow& window) {
 // Returns: nothing
 void pauseScreen(RenderWindow& window, bool &restartState) {
 	bool isPaused = true; // Keeps track if the player chooses to resume the game
+	Event event; // Keeps track of any inputs
 
+	// CONTROLLER VARIABLES //
 	bool canPressStart = false; // Checks if the user's controller can press start
 	int yPos; // Position of the user's controller left stick y axis
 	int option = -1; // Option for the menu of the controller
-	bool canSelect = true;
-
-	Event event; // Keeps track of any inputs
+	bool canSelect = true; // Limits the controller to only be tapped otherwise would be to fast
+	Mouse::setPosition(Vector2i(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y + 120 * option), window); // Sets the mouse to be over the resume button
 
 	// The buttons on the pause screen
 	Button resumeButton(MIDDLE_OF_SCREEN_X, MIDDLE_OF_SCREEN_Y-120, "Resume", "bulkypix.ttf");
@@ -75,6 +86,7 @@ void pauseScreen(RenderWindow& window, bool &restartState) {
 	int blue = 0; // Used for a smooth transition in background color
 	Color bgColor(0, 0, blue);
 
+	// Main loop
 	while (window.isOpen() && isPaused) {
 		isPaused = !resumeButton.mouseInteract(window); // If the user clicks the resume button
 
@@ -86,6 +98,7 @@ void pauseScreen(RenderWindow& window, bool &restartState) {
 
 		// Controls the menu with the controller
 		if (Joystick::isConnected(0)) {
+			window.setMouseCursorVisible(false); // Hides the cursor if a controller is connected
 			yPos = Joystick::getAxisPosition(0, Joystick::Y);
 
 			// Selecting options
@@ -114,8 +127,9 @@ void pauseScreen(RenderWindow& window, bool &restartState) {
 					window.close();
 			}
 		}
-
-
+		else {
+			window.setMouseCursorVisible(true);
+		}
 
 		// Closes the game if escape or the quit button are pressed
 		while (window.pollEvent(event)) {
@@ -184,6 +198,14 @@ void deathPrompt(RenderWindow& window) {
 
 	// While the user takes no action
 	while (isDead) {
+
+		Joystick::update();
+		// If the "R" key is pressed continue the game
+		if (Keyboard::isKeyPressed(Keyboard::R) || Joystick::isButtonPressed(0, 5))
+			isDead = false;
+		else if (Keyboard::isKeyPressed(Keyboard::Escape))
+			window.close();
+
 		// Make text pretty
 		deadPrompt.textColorShifter();
 		restartPrompt.textColorShifter();
@@ -191,12 +213,6 @@ void deathPrompt(RenderWindow& window) {
 		window.draw(deadPrompt.getText());
 		window.draw(restartPrompt.getText());
 		window.display();
-
-		// If the "R" key is pressed continue the game
-		if (Keyboard::isKeyPressed(Keyboard::R))
-			isDead = false;
-		else if (Keyboard::isKeyPressed(Keyboard::Escape))
-			window.close();
 	}
 }
 
