@@ -3,6 +3,7 @@
 #include "SFML\Window.hpp"
 #include "SFML\System.hpp"
 #include "SFML\Graphics.hpp"
+#include "SFML\Audio.hpp"
 #include "Platform.h"
 #include "Player.h"
 #include "Game.h"
@@ -20,15 +21,37 @@ int main() {
 	bool restartState = false;
 	window.setFramerateLimit(60);
 	Game game;
+
+	sf::Music music;
+	music.setVolume(7);
+	music.setLoop(true);
+	if (music.openFromFile("sounds/space_fighter_loop.wav")) music.play();
+
+	sf::SoundBuffer buffer;
+	buffer.loadFromFile("sounds/speedup.wav");
+	sf::Sound restartSound;
+	restartSound.setVolume(25);
+	restartSound.setBuffer(buffer);
+
+	sf::SoundBuffer buffer2;
+	buffer2.loadFromFile("sounds/slowdown.wav");
+	sf::Sound dieSound;
+	dieSound.setVolume(25);
+	dieSound.setBuffer(buffer2);
+
 	titleScreen(window);
 	fade(window, 0, 0);
 	int frame = 0;
 	bool canPause = false;
 	auto start = std::chrono::system_clock::now();
-
-
+	
 
 	for (int levelNumber = 1; levelNumber < 11; levelNumber++) {
+		
+		// Plays music if it is paused and stops all sounds effects
+		if (music.getStatus() == music.Paused) music.play();
+		restartSound.stop();
+		dieSound.stop();
 
 		if (!window.isOpen())
 			break;
@@ -65,6 +88,7 @@ int main() {
 
 			// If the player pressed R
 			if (restartState) {
+				restartSound.play();
 				restartState = false;
 				levelNumber--;
 				break;
@@ -76,8 +100,11 @@ int main() {
 			game.draw(window, player, platformsInLevel, breakPlatformsInLevel, Color::Black);
 
 			// If the player falls off the map they die
-			if (player.isOutside())
+			if (player.isOutside()) {
+				dieSound.play();
+				music.pause();
 				deathPrompt(window);
+			}
 
 			// Decreases the score
 			if (frame % 60 == 0) {
@@ -87,6 +114,7 @@ int main() {
 				frame = 0;
 				if (game.getLevelScore() > 0)
 					game.setLevelScore(game.getLevelScore()-1);
+
 			}
 			
 		}
