@@ -4,7 +4,7 @@
 Decay is a puzzle game coded in C++ that makes use of the SFML framework for graphics, input, sound. The objective of the game is to strategically clear every platform in the level. The game ends when the user completes level 10.
 
 ## Experience
-This was my first major C++ project. I did not know about heaps so all of the data is accessed from the stack in this game. I put a large focus and made clean, readable files while also building on my fundamentals of game development from the Bounce game. I think I could’ve made a tool for creating levels because I made them manually in ```Level.cpp```. 
+This was my first major C++ project. I did not know about heaps so all of the data is accessed from the stack in this game. I put a large focus on clean, readable files while also building on my fundamentals of game development from the Bounce game. I think I could’ve made a tool for creating levels because I made them manually in ```Level.cpp```. 
 
 ## Controls
 Left Arrow / A: Move left.
