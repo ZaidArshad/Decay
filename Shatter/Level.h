@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <fstream>
+#include <string>
 #include "BreakPlatform.h"
 #include "Platform.h"
 #include "Processes.h"
@@ -21,5 +23,7 @@ public:
 	// Gets the list of platform objects from the level object
 	std::vector<Platform> getPlatforms();
 	std::vector<BreakPlatform> getBreakPlatforms();
+	void createPlatform(std::string line);
+	void createLevelFromFile(int level);
 };
 
