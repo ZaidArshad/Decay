@@ -57,10 +57,10 @@ int main() {
 			break;
 
 		std::cout << "Level number: " << levelNumber << "\n";
-		Player player(startPositions[levelNumber-1].x, startPositions[levelNumber-1].y, 1);
 		Level level(levelNumber);
 		std::vector<Platform> platformsInLevel = level.getPlatforms();
 		std::vector<BreakPlatform> breakPlatformsInLevel = level.getBreakPlatforms();
+		Player player(level.getStartPosition(), 1);
 
 
 		while (window.isOpen() && !level.isComplete(breakPlatformsInLevel)) {

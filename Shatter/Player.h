@@ -33,7 +33,7 @@ class Player
 
 public:
 	//------Constructors------//
-	Player(float x, float y, float s);
+	Player(Vector2f startPosition, float scale);
 
 	//------Setters------//
 	void setScale(float s);

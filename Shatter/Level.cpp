@@ -19,6 +19,9 @@ Level::Level(int l) {
 	}
 }
 
+// Gets the start position of the level
+Vector2f Level::getStartPosition() { return startPosition;}
+
 // Gets the vectors of the platforms from the level
 std::vector<Platform> Level::getPlatforms() { return platformsInLevel;  }
 std::vector<BreakPlatform> Level::getBreakPlatforms() { return breakPlatformsInLevel; }
@@ -44,6 +47,22 @@ bool Level::isComplete(std::vector<BreakPlatform> &breakPlatforms) {
 	else {
 		return false;
 	}
+}
+
+// Gets the starting position from given line from the file "levelX.txt"
+void Level::setStartingPosition(std::string line) {
+	std::string val = "";
+
+	for (char c : line) {
+		if (c == ' ') {
+			startPosition.x = std::stoi(val);
+			val = "";
+		}
+		else {
+			val += c;
+		}
+	}
+	startPosition.y = std::stoi(val);
 }
 
 // Creates a platform from a string of fields "health width height xPos yPos"
@@ -89,15 +108,20 @@ void Level::createPlatform(std::string line) {
 void Level::createLevelFromFile(int level) {
 	std::string line;
 	std::ifstream levelFile;
+	bool hasStartingPos = false;
 	std::string fileLocation = "levels/level" + std::to_string(level) + ".txt";
 	levelFile.open(fileLocation);
 
 	if (levelFile.is_open()) {
 		while (std::getline(levelFile, line)) {
-			createPlatform(line);
+			if (!hasStartingPos) {
+				setStartingPosition(line);
+				hasStartingPos = true;
+			}
+			else createPlatform(line);
 		}
 	}
 	else {
-		platformsInLevel.push_back(Platform(100, 25, 400, 300));
+		breakPlatformsInLevel.push_back(BreakPlatform(8, 500, 25, 0, 400));
 	}
 }

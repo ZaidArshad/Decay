@@ -6,10 +6,10 @@
 using namespace sf;
 
 // Regular constructor
-Player::Player(float x, float y, float s) {
-	scale = s;
-	xPos = x;
-	yPos = y;
+Player::Player(Vector2f startPosition, float scale) {
+	scale = scale;
+	xPos = startPosition.x;
+	yPos = startPosition.y;
 	xSpeed = 0;
 	ySpeed = 10;
 	canJump = false; // Keeps track if the player can jump
