@@ -24,8 +24,12 @@ private:
 public:
 	// Builds the inputed level
 	Level(int l);
+
 	// Checks if all the destoryable platform are gone
 	bool isComplete(std::vector<BreakPlatform>& breakPlatforms);
+
+	// Gets the level number
+	int getLevelNumber();
 
 	// Gets the list of platform objects from the level object
 	Vector2f getStartPosition();

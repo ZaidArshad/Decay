@@ -2,6 +2,26 @@
 #include "Prompt.h"
 #include<iostream>
 
+Game::Game() {
+	std::ifstream levelFile;
+	std::string fileLocation;
+	bool validFileNames = true;
+
+	// Checking how many levels are loaded
+	while (validFileNames) {
+		fileLocation = "levels/level" + std::to_string(numberOfLevels + 1) + ".txt";
+		levelFile.open(fileLocation);
+		if (levelFile.good()) {
+			levelFile.close();
+			numberOfLevels++;
+		}
+		else {
+			cout << "Num of levels: " << numberOfLevels << endl;
+			validFileNames = false;
+		}
+	}
+}
+
 void Game::update(Player& player) {
 
 	// JOYSTICK //
@@ -196,3 +216,6 @@ void Game::setLevelScore(int lScore) {
 int Game::getTotalScore() { return totalScore; }
 int Game::getLevelScore() { return levelScore; }
 Prompt Game::getPromptScore() { return currentScorePrompt;  }
+
+// Get the number of levels in the game
+int Game::getNumberOfLevels() { return numberOfLevels; }

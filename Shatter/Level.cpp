@@ -49,6 +49,8 @@ bool Level::isComplete(std::vector<BreakPlatform> &breakPlatforms) {
 	}
 }
 
+int Level::getLevelNumber() { return level; }
+
 // Gets the starting position from given line from the file "levelX.txt"
 void Level::setStartingPosition(std::string line) {
 	std::string val = "";
@@ -106,6 +108,7 @@ void Level::createPlatform(std::string line) {
 
 // Generates a list of platforms from "levelX.txt"
 void Level::createLevelFromFile(int level) {
+	std::cout << "Generating level " << level << std::endl;
 	std::string line;
 	std::ifstream levelFile;
 	bool hasStartingPos = false;

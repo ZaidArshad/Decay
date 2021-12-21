@@ -21,6 +21,7 @@ int main() {
 	bool restartState = false;
 	window.setFramerateLimit(60);
 	Game game;
+	int numberOfLevels = game.getNumberOfLevels();
 
 	sf::Music music;
 	music.setVolume(7);
@@ -46,7 +47,7 @@ int main() {
 	auto start = std::chrono::system_clock::now();
 	
 
-	for (int levelNumber = 1; levelNumber < 11; levelNumber++) {
+	for (int levelNumber = 1; levelNumber <= numberOfLevels; levelNumber++) {
 		
 		// Plays music if it is paused and stops all sounds effects
 		if (music.getStatus() == music.Paused) music.play();

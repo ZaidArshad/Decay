@@ -3,6 +3,7 @@
 #include"Platform.h"
 #include "BreakPlatform.h"
 #include "Prompt.h"
+#include <fstream>
 
 
 class Game
@@ -13,8 +14,11 @@ class Game
 	float joyX;
 	float joyJump = false;
 	int baseSpeed = 10;
+	int numberOfLevels = 0;
 
 public:
+	Game();
+
 	// Updates player position and controls gravity
 	void update(Player& player);
 
@@ -33,5 +37,8 @@ public:
 	int getTotalScore();
 	int getLevelScore();
 	Prompt getPromptScore();
+
+	// Get number of levels in game
+	int getNumberOfLevels();
 };
 
