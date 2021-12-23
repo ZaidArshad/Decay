@@ -9,6 +9,7 @@ BreakPlatform::BreakPlatform(int hp, float  w, float  h, float  x, float y) {
 	// Position and size attributes
 	width = w;
 	height = h;
+	originalHeight = h;
 	xPos = x;
 	yPos = y;
 

@@ -10,6 +10,7 @@ public:
 	// General attributes
 	float width;
 	float height;
+	float originalHeight;
 	float xPos;
 	float yPos;
 	sf::RectangleShape rectangleShape;
@@ -31,6 +32,7 @@ public:
 	//------Getters------//
 	float getWidth();
 	float getHeight();
+	float getOriginalHeight();
 	float getXPos();
 	float getYPos();
 	int getPlatformId();

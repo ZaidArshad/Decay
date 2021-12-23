@@ -18,6 +18,7 @@ Platform::Platform() {
 Platform::Platform(float  w, float  h, float  x, float y) {
 	width = w;
 	height = h;
+	originalHeight = h;
 	xPos = x;
 	yPos = y;
 	rectangleShape.setSize(Vector2f(width, height));
@@ -48,6 +49,7 @@ void Platform::setPlatformId(int id) { platformId = id; }
 //------Getters------//
 float  Platform::getWidth() { return width; }
 float  Platform::getHeight() { return height; }
+float Platform::getOriginalHeight() { return originalHeight; }
 float Platform::getXPos() { return xPos; }
 float Platform::getYPos() { return yPos; }
 

@@ -15,8 +15,7 @@
 using namespace sf;
 
 int main() {
-	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "DECAY", sf::Style::Default | sf::Style::Close);
-
+	RenderWindow window(VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "DECAY", sf::Style::Titlebar | sf::Style::Close);
 
 	bool restartState = false;
 	window.setFramerateLimit(60);

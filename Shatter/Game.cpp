@@ -57,7 +57,7 @@ void Game::update(Player& player) {
 
 	// GRAVITY //
 	if (!player.getJump() && player.getYPos() <= player.getJumpHeight()) //if in the air & have reached peak jump height
-		player.setYSpeed(10);
+		player.setYSpeed(10);  // CHANGE THIS CHANGE THIS CHANGE THIS CHANGE THIS CHANGE THIS CHANGE THIS  CHANGE THIS  CHANGE THIS  CHANGE THIS  CHANGE THIS 
 
 	// When the player is not jumping, fall
 	else if (player.getJump())
@@ -77,11 +77,11 @@ void Game::draw(RenderWindow& window, Player& player, std::vector<Platform>& pla
 	window.clear(c);
 
 	// Drawing platforms
-	for (size_t i = 0; i < platforms.size(); i++) {
-		window.draw(platforms[i].getShape());
-	}
 	for (size_t i = 0; i < breakPlatforms.size(); i++) {
 		window.draw(breakPlatforms[i].getShape());
+	}
+	for (size_t i = 0; i < platforms.size(); i++) {
+		window.draw(platforms[i].getShape());
 	}
 
 	// Draws the score
@@ -130,7 +130,7 @@ void Game::collision(Player& player, std::vector<Platform>& platforms) {
 			// Bottom of platform
 			else if (playerBot > platformBot && player.getYPos() <= platformBot) {
 				player.setYPos((float)(platform.getYPos() + platform.getHeight())); // Sets the player to the bottom of the platform
-				player.setYSpeed(10);
+				player.setYSpeed(0);
 			}
 		}
 	}
@@ -153,12 +153,14 @@ void Game::collision(Player& player, std::vector<BreakPlatform>& breakPlatforms)
 		if (player.getSprite().getGlobalBounds().intersects(platform.getShape().getGlobalBounds())) {
 
 			// Left of platform
-			if (player.getXPos() < platform.getXPos() && playerRight <= platform.getXPos()+10 && (player.getYPos() <= platform.getYPos() || playerBot >= platformBot)) {
+			if (player.getXPos() < platform.getXPos() && playerRight <= platform.getXPos()+10 &&
+				(player.getYPos() <= platform.getYPos() || playerBot >= platformBot || (player.getYPos() >= platform.getYPos() && playerBot <= platformBot))) {
 				player.setXPos((float)(platform.getXPos() - player.getTexture().getSize().x));
 				player.setXSpeed(0);
 			}
 			// Right of platform
-			else if (playerRight > platformRight && player.getXPos() >= platformRight-10 && (player.getYPos() <= platform.getYPos() || playerBot >= platformBot)) {
+			else if (playerRight > platformRight && player.getXPos() >= platformRight-10 &&
+				(player.getYPos() <= platform.getYPos() || playerBot >= platformBot || (player.getYPos() >= platform.getYPos() && playerBot <= platformBot))) {
 				player.setXPos((float)(platform.getXPos() + platform.getWidth() + 0.5));
 				player.setXSpeed(0);
 			}
@@ -195,8 +197,8 @@ void Game::collision(Player& player, std::vector<BreakPlatform>& breakPlatforms)
 			breakPlatforms[i].setIsTouched(false);
 
 		// Slowly remove the platform whem it's health is gone
-		if (platform.getHealth() == 0 && platform.getHeight() > 1)
-			breakPlatforms[i].setHeight(breakPlatforms[i].getHeight() - 0.25);
+		if (platform.getHealth() == 0 && platform.getHeight() > 1) 
+			breakPlatforms[i].setHeight(breakPlatforms[i].getHeight() - breakPlatforms[i].getOriginalHeight() * 0.0125);
 
 		// Remove the platform once it is small enough
 		else if (platform.getHealth() == 0 && platform.getHeight() <= 1)
